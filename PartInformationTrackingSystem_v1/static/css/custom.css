@@ -1,0 +1,10 @@
+html { overflow-y: scroll; }
+
+.v-center{
+    display:table-cell;
+    vertical-align:middle;
+}
+
+.active{
+    font-weight: bold;
+}

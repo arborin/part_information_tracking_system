@@ -1,6 +1,8 @@
 import flask
 import socket
 import sys
+
+from sqlalchemy import true
 import communicate
 import serial
 from flask import json
@@ -18,15 +20,26 @@ class App(Flask):
     def __init__(self, import_name, camera_params = None, scale_params = None, db_params = None):
 
         super().__init__(import_name)
+        
+        # 10 Parameter 
         self.weights_file = 'settings/weights.json'
+        
+        # CAMERA PATAMETERS
         with open(camera_params, 'r') as fileo:
             self.camera_params = json.load(fileo)
+        
+        # SCALE PARAMETERS
         with open(scale_params, 'r') as fileo:
             self.scale_params = json.load(fileo)
+        
+        # DATABASE PARAMETERS
         with open(db_params, 'r') as fileo:
             self.db_params = json.load(fileo)
+        
+        #  
         with open(self.weights_file, 'r') as fileo:
             self.weights = json.load(fileo)
+            
         self.camera_file = camera_params
         self.scale_file = scale_params
         self.db_file = db_params
@@ -105,9 +118,12 @@ def test_disconnect():
 @app.route('/')
 def test():
     title = "Default Page"
+    
     with open(app.weights_file, 'r') as fileo:
         app.weights = json.load(fileo)
+        
     active = app.active_weight["part_name"] if app.active_weight is not None else "No Part active"
+    
     return render_template('base.html', title = title, weights = app.weights, active_weight = active)
 
 @app.route('/settings')
@@ -217,4 +233,4 @@ def get_weight():
 
 
 if __name__ == '__main__':
-    socketio.run(app)
+    socketio.run(app, debug=true)
