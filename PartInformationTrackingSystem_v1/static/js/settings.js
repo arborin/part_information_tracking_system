@@ -66,3 +66,23 @@ $('#checkCameraConnection').click(function(){
 function checkCameraConnectionCallback(data, status, xhr){
     alert(xhr.responseText);
 }
+
+
+$(document).ready(function () {
+    console.log("Ready ...");
+    $("#toggleDbSettings").change(function() {
+        if(this.checked) {
+            $("#databaseIPInput").prop("disabled", false);
+            $("#databasePortInput").prop("disabled", false);
+            $("#databaseUserInput").prop("disabled", false);
+            $("#databasePasswordInput").prop("disabled", false);
+            console.log("Enabled Database Settings Edit");
+        }else{
+            $("#databaseIPInput").prop("disabled", true);
+            $("#databasePortInput").prop("disabled", true);
+            $("#databaseUserInput").prop("disabled", true);
+            $("#databasePasswordInput").prop("disabled", true);
+            console.log("Disabled Database Settings Edit");
+        }
+    });
+});

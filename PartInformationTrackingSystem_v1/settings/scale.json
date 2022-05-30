@@ -6,8 +6,8 @@
                     "scale_port": "1001"
                 },
                 {
-                    "name": "scale 02",
-                    "scale_ip": "192.168.50.24",
+                    "name": "SCALE #2",
+                    "scale_ip": "192.168.50.25",
                     "scale_port": "1001"
                 }
             ]

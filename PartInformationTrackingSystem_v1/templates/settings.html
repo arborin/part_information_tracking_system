@@ -5,7 +5,7 @@
 <head>
     
     <title>{% block title %}{{title}}{% endblock %}</title>
-    
+    <link rel="shortcut icon" href="/static/favicon.png" type="image/icon" />
     <link rel='stylesheet' href='/static/bootstrap/css/bootstrap.min.css'>
     <link rel='stylesheet' href='/static/css/custom.css'>
     
@@ -139,29 +139,139 @@
                 
                 
                 <div class="tab-pane" id="tabs-2" role="tabpanel">
-                    <p>Second Panel</p>
+                    <form>
+                        <div class='form-row'>
+                            <div class='form-group col-md-12 mt-5'>
+                                <div class="form-check">
+                                    <input class="form-check-input mt-2" type="checkbox" value="" id="flexCheckDefault">
+                                    <label class="form-check-label" for="flexCheckDefault">
+                                        <h5>Scale Connection Settings</h5>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class='form-group col-md-6'>
+                                <label for='scaleIpInput'>Scale IP:</label>
+                                <input type='text' value='{{ scale_params.scale[1].scale_ip }}' class='form-control' disabled id='scaleIpInput' autocomplete="off" >
+                            </div>
+                            <div class='form-group col-md-6'>
+                                <label for ='scalePortInput'>Scale Port:</label>
+                                <input type='text' value='{{ scale_params.scale[1].scale_port }}' class='form-control' disabled id='scalePortInput' autocomplete="off">
+                            </div>
+                            <div class='col-sm-12'>
+                                <button type='button' class='btn btn-secondary' id='checkScaleConnection'>Check Connection</button>
+                                <button type='button' class='btn btn-primary' id="saveScaleSettings">Save Settings</button>
+                            </div>
+                        </div>
+                    </form>
+                    
+                    <hr class="mt-5 mb-5">
+                    
+                    <form>
+                        <div class="form-row">
+                            <div class='form-group col-md-12'>
+                                <div class="form-check">
+                                    <input class="form-check-input mt-2" type="checkbox" value="" id="flexCheckDefault">
+                                    <label class="form-check-label" for="flexCheckDefault">
+                                        <h5>Camera Connection Settings</h5>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class='form-group col-md-6'>
+                                <label for='ComPortInput'>COM Port:</label>
+                                <select type='select' value='COM3' class='form-control' id='ComPortInput' autocomplete='off'>
+                                    <option value='COM1' {% if camera_params.com_port == "COM1" %}selected{% endif %}>COM1</option>
+                                    <option value='COM2' {% if camera_params.com_port == "COM2" %}selected{% endif %}>COM2</option>
+                                    <option value='COM3' {% if camera_params.com_port == "COM3" %}selected{% endif %}>COM3</option>
+                                </select>
+                            </div>
+                            <div class='form-group col-md-6'>
+                                <label for="BaudRateInput">Baud Rate:</label>
+                                <select type='select' class='form-control' id="BaudRateInput" autocomplete='off'>
+                                    <option value="110" {% if camera_params.baud_rate == "110" %}selected{% endif %}>110</option>
+                                    <option value="300" {% if camera_params.baud_rate == "300" %}selected{% endif %}>300</option>
+                                    <option value="600" {% if camera_params.baud_rate == "600" %}selected{% endif %}>600</option>
+                                    <option value="1200" {% if camera_params.baud_rate == "1200" %}selected{% endif %}>1200</option>
+                                    <option value="2400" {% if camera_params.baud_rate == "2400" %}selected{% endif %}>2400</option>
+                                    <option value="4800" {% if camera_params.baud_rate == "4800" %}selected{% endif %}>4800</option>
+                                    <option value="9600" {% if camera_params.baud_rate == "9600" %}selected{% endif %}>9600</option>
+                                    <option value="14400"{% if camera_params.baud_rate == "14400" %}selected{% endif %}>14400</option>
+                                    <option value="19200"{% if camera_params.baud_rate == "19200" %}selected{% endif %}>19200</option>
+                                    <option value="38400"{% if camera_params.baud_rate == "38400" %}selected{% endif %}>38400</option>
+                                    <option value="57600"{% if camera_params.baud_rate == "57600" %}selected{% endif %}>57600</option>
+                                    <option value="115200"{% if camera_params.baud_rate == "115200" %}selected{% endif %}>115200</option>
+                                    <option value="128000"{% if camera_params.baud_rate == "128000" %}selected{% endif %}>128000</option>
+                                    <option value="256000"{% if camera_params.baud_rate == "256000" %}selected{% endif %}>256000</option>
+                                </select>
+                            </div>
+                            <div class='form-group col-md-6'>
+                                <label for="BiteSizeInput">Data Bits:</label>
+                                <select type='select' class='form-control' id="BiteSizeInput" autocomplete='off'>
+                                    <option value="5" {% if camera_params.byte_size == "5" %}selected{% endif %}>5</option>
+                                    <option value="6" {% if camera_params.byte_size == "6" %}selected{% endif %}>6</option>
+                                    <option value="7" {% if camera_params.byte_size == "7" %}selected{% endif %}>7</option>
+                                    <option value="8" {% if camera_params.byte_size == "8" %}selected{% endif %}>8</option>
+                                </select>
+                            </div>
+                            <div class='form-group col-md-6'>
+                                <label for="ParityInput">Parity:</label>
+                                <select type='select' class='form-control' id="ParityInput" autocomplete='off'>
+                                    <option value="None" {% if camera_params.parity == "None" %}selected{% endif %}>None</option>
+                                    <option value="Even" {% if camera_params.parity == "Even" %}selected{% endif %}>Odd</option>
+                                    <option value="Mark" {% if camera_params.parity == "Mark" %}selected{% endif %}>Mark</option>
+                                    <option value="Space" {% if camera_params.parity == "Space" %}selected{% endif %}>Space</option>
+                                </select>
+                            </div>
+                            <div class='form-group col-md-6'>
+                                <label for="StopBitsInput">Stop Bits:</label>
+                                <select type='select' class='form-control' id="StopBitsInput" autocomplete='off'>
+                                    <option value="1" {% if camera_params.stop_bits == "1" %}selected{% endif %}>1</option>
+                                    <option value="1.5" {% if camera_params.stop_bits == "1.5" %}selected{% endif %}>1.5</option>
+                                    <option value="2" {% if camera_params.stop_bits == "2" %}selected{% endif %} >2</option>
+                                </select>
+                            </div>
+                            <div class='form-group col-md-6'>
+                                <label for="FlowControlInput">Flow Control:</label>
+                                <select type='select' class='form-control' id="FlowControlInput" autocomplete='off'>
+                                    <option value="DSR/DTR" {% if camera_params.flow_control == "DSR/DTR" %}selected{% endif %}>DSR/DTR</option>
+                                    <option value="RTS/CTS" {% if camera_params.flow_control == "RTS/CTS" %}selected{% endif %}>RTS/CTS</option>
+                                    <option value="XON/XOFF" {% if camera_params.flow_control == "XON/XOFF" %}selected{% endif %}>XON/XOFF</option>
+                                </select>
+                            </div>
+                            <div class='col-sm-12'>
+                                <button type='button' class='btn btn-secondary' id='checkCameraConnection'>Check Connection</button>
+                                <button type='button' class='btn btn-primary' id="saveCameraSettings">Save Settings</button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
                 
                 
                 <div class="tab-pane" id="tabs-3" role="tabpanel">
                     <form>
                         <div class="form-row">
-                            <h5 class="col-sm-12">Database Connection Settings</h5>
+                            <div class='form-group col-md-12 mt-5'>
+                                <div class="form-check">
+                                    <input class="form-check-input mt-2" type="checkbox" value="" id="toggleDbSettings">
+                                    <label class="form-check-label" for="flexCheckDefault">
+                                        <h5>Database Connection Settings</h5>
+                                    </label>
+                                </div>
+                            </div>
                             <div class="form-group col-sm-6">
                                 <label for="databaseIPInput">DB IP:</label>
-                                <input type='text' class="form-control" id="databaseIPInput" value='{{ db_params.database_ip}}'>
+                                <input type='text' class="form-control" id="databaseIPInput" disabled value='{{ db_params.database_ip}}'>
                             </div>
                             <div class='form-group col-sm-6'>
                                 <label for="databasePortInput">DB Port:</label>
-                                <input type='text' class="form-control" id="databasePortInput" value='{{ db_params.database_port }}'>
+                                <input type='text' class="form-control" id="databasePortInput" disabled value='{{ db_params.database_port }}'>
                             </div>
                             <div class='form-group col-sm-6'>
                                 <label for="databaseUserInput">DB Username:</label>
-                                <input type='text' class="form-control" id="databaseUserInput" value='{{ db_params.database_user }}'>
+                                <input type='text' class="form-control" id="databaseUserInput" disabled value='{{ db_params.database_user }}'>
                             </div>
                             <div class='form-group col-sm-6'>
                                 <label for="databasePasswordInput">DB Password:</label>
-                                <input type='password' class="form-control" id="databasePasswordInput" value='{{ db_params.database_password }}'>
+                                <input type='password' class="form-control" id="databasePasswordInput" disabled value='{{ db_params.database_password }}'>
                             </div>
                             <div class='col-sm-12'>
                                 <button type='button' class='btn btn-secondary' id='checkDBConnection'>Check Connection</button>

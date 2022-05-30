@@ -4,6 +4,7 @@
 <html>
 <head>
     <title>{% block title %}Default Page{% endblock %}</title>
+    <link rel="shortcut icon" href="/static/favicon.png" type="image/icon" />
     
     <link rel='stylesheet' href='/static/bootstrap/css/bootstrap.min.css'>
     <link rel='stylesheet' href='/static/css/custom.css'>
@@ -27,13 +28,12 @@
                 <button class='btn btn-primary' id='setActiveWeight'>Set Active Weight</button>
             </div>
             
-            <div class="col-md-12 mt-5">
-                <div class="row">
-                    <span class="col-sm-4"><strong>Active Part:<span id='active_weight'>{% block active_weight %}{{active_weight}}{% endblock %}</span></strong></span>
+            <div class="col-md-12 mt-4">
+                <div class="alert alert-warning">
+                    <span class="col-sm-4"><strong>Active Part: <span id='active_weight'>{% block active_weight %}{{active_weight}}{% endblock %}</span></strong></span>
                 </div>
-               
-                <br>
-                <table class="table table-bordered table-sm">
+
+                <table class="table table-bordered table-sm mt-4">
                     <thead >
                     <tr>
                         <th style="background-color:#f8f9fa">No.</th>

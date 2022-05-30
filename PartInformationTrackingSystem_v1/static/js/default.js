@@ -24,6 +24,7 @@ $(document).ready(function () {
 $('#setActiveWeight').click(function(){
     part_name = $("#selectActiveWeight").val();
     row = $('#row'+part_name.replace(' ','_'));
+    console.log(row);
     values = row.find('input')
     var data = {
         "part_name": values[0].value,
@@ -73,3 +74,6 @@ function checkWeightWasSet(data, status, xhr){
     }
 
 };
+
+
+
