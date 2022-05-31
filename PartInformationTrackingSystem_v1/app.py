@@ -12,7 +12,7 @@ from flask.config import Config
 from pymongo import MongoClient
 from flask_socketio import SocketIO, emit
 from threading import Thread, Event
-
+import logging
 #On startup the app has to load database settings first
 
 
@@ -28,7 +28,6 @@ class App(Flask):
         with open(camera_params, 'r') as fileo:
             self.camera_params = json.load(fileo)
         
-        print(self.camera_params)
         # SCALE PARAMETERS
         with open(scale_params, 'r') as fileo:
             self.scale_params = json.load(fileo)
@@ -57,12 +56,15 @@ class App(Flask):
         if dest == 'camera':
             with open(self.camera_file, 'w') as fileo:
                 json.dump(self.camera_params, fileo)
+                
         if dest == 'db':
             with open(self.db_file, 'w') as fileo:
                 json.dump(self.db_params, fileo)
+                
         if dest == 'scale':
             with open(self.scale_file, 'w') as fileo:
                 json.dump(self.scale_params, fileo)
+                
         if dest == 'weights':
             with open(self.weights_file, 'w') as fileo:
                 json.dump(self.weights, fileo)
@@ -70,6 +72,9 @@ class App(Flask):
 app = App(__name__, camera_params = 'settings/camera.json',
             scale_params = 'settings/scale.json',
             db_params = 'settings/db.json')
+            
+            
+logging.basicConfig(level=logging.DEBUG)
 
 socketio = SocketIO(app, async_mode=None, logger=True, engineio_logger=True)
 thread = Thread()
@@ -167,8 +172,18 @@ def check_camera_connection():
 @app.route('/settings/scale', methods=["GET", "POST"])
 def set_scale_parames():
     args = flask.request.form
-    app.scale_params = args
+
+    app.logger.info(app.scale_params)
+    args = dict(args)
+    scale_id = int(args['scale_id'][0])
+    
+    
+    app.scale_params['scale'][scale_id]['scale_ip'] = args['scale_ip'][0]
+    app.scale_params['scale'][scale_id]['scale_port'] = args['scale_port'][0]
+    
+    app.logger.info(app.scale_params)
     app.write_settings('scale')
+    
     return app.make_response('OK')
 
 @app.route('/settings/weights', methods=["GET", "POST"])

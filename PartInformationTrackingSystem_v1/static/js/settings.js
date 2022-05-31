@@ -1,9 +1,16 @@
-$("#saveScaleSettings").click(function(){
+
+$("[id^='saveScaleSettings-']").click(function(){
+    
+    let id = this.id.split('-')[1];
+
     var data = {
-        "scale_ip" : $("#scaleIpInput").val(),
-        "scale_port" : $("#scalePortInput").val()
+        "scale_id" : id,
+        "scale_ip" : $("#scaleIpInput-"+id).val(),
+        "scale_port" : $("#scalePortInput-"+id).val()
     };
-    //alert(data["scale_ip"]);
+    
+    console.log(data);
+
     $.post('/settings/scale', data )
 });
 
