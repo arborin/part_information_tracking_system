@@ -1,19 +1,8 @@
 {% set active_page = "data" %}
 
-<!DOCTYPE html>
-<html>
-<head>
-    <title>{% block title %}Default Page{% endblock %}</title>
-    <link rel="shortcut icon" href="/static/favicon.png" type="image/icon" />
-    
-    <link rel='stylesheet' href='/static/bootstrap/css/bootstrap.min.css'>
-    <link rel='stylesheet' href='/static/css/custom.css'>
-    
-</head>
-<body>
-    {% include('navbar.html') %}
+{% extends "layout.html" %}
 
-    {% block body %}
+{% block body %}
     <div class='container'>
         <div class="row">
             
@@ -27,8 +16,10 @@
             <div class="col-md-2">   
                 <button class='btn btn-primary' id='setActiveWeight'>Set Active Weight</button>
             </div>
-            
-            <div class="col-md-12 mt-4">
+        </div>
+        <div class="row"> 
+            <!-- SCALE 1 -->
+            <div class="col-md-6 mt-4">
                 <div class="alert alert-warning">
                     <span class="col-sm-4"><strong>Active Part: <span id='active_weight'>{% block active_weight %}{{active_weight}}{% endblock %}</span></strong></span>
                 </div>
@@ -44,35 +35,77 @@
                     </tr>
                     </thead>
                     <tbody>
-                {% for weight in weights %}
-                <tr class="weight-row" id="{{'row'+weight.part_name|replace(' ','_')}}">
-                        <td><strong>{{loop.index}}</strong></td>
-                        <td><input type="text" value="{{weight.part_name}}"></td>
-                        <td><input type="text" step="0.01" value="{{ weight.weight }}" ></td>
-                        <td><input type="text" step="0.01" value="{{weight.ll}}" ></td>
-                        <td><input type="text" step="0.01" value="{{weight.hl}}" ></td>
-                </tr>
-                {% endfor %}
+                    {% for weight in weights %}
+                        <tr class="weight-row" id="{{'row'+weight.part_name|replace(' ','_')}}">
+                            <!-- <td><strong>{{loop.index}}</strong></td>
+                            <td><input type="text" value="{{weight.part_name}}"></td>
+                            <td><input type="text" step="0.01" value="{{ weight.weight }}" ></td>
+                            <td><input type="text" step="0.01" value="{{weight.ll}}" ></td>
+                            <td><input type="text" step="0.01" value="{{weight.hl}}" ></td> -->
+                            
+                            <td><strong>{{loop.index}}</strong></td>
+                            <td><input type="text" style="width: 250px" value="{{weight.part_name}}"></td>
+                            <td><input type="text" style="width: 60px" step="0.01" value="{{ weight.weight }}" ></td>
+                            <td><input type="text" style="width: 60px" step="0.01" value="{{weight.ll}}" ></td>
+                            <td><input type="text" style="width: 60px" step="0.01" value="{{weight.hl}}" ></td>
+                        </tr>
+                    {% endfor %}
 
                     </tbody>
                 </table>
-
                 <button class='btn btn-primary col-sm-12'id = "saveWeights">Save Weights</button>
-                <br>
-                <br>
+            </div>
+            
+            
+            <!-- SCALE 2 -->
+            <div class="col-md-6 mt-4">
+                <div class="alert alert-warning">
+                    <span class="col-sm-4"><strong>Active Part: <span id='active_weight'>...</span></strong></span>
+                </div>
+
+                <table class="table table-bordered table-sm mt-4">
+                    <thead >
+                    <tr>
+                        <th style="background-color:#f8f9fa">No.</th>
+                        <th style="background-color:#f8f9fa">Partname</th>
+                        <th style="background-color:#f8f9fa">Zero Weight</th>
+                        <th style="background-color:#f8f9fa">Low Limit</th>
+                        <th style="background-color:#f8f9fa">High Limit</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for weight in weights %}
+                        <tr class="weight-row" id="{{'row'+weight.part_name|replace(' ','_')}}">
+                            <!-- <td><strong>{{loop.index}}</strong></td>
+                            <td><input type="text" value="{{weight.part_name}}"></td>
+                            <td><input type="text" step="0.01" value="{{ weight.weight }}" ></td>
+                            <td><input type="text" step="0.01" value="{{weight.ll}}" ></td>
+                            <td><input type="text" step="0.01" value="{{weight.hl}}" ></td> -->
+                            
+                            <td><strong>{{loop.index}}</strong></td>
+                            <td><input type="text" style="width: 250px" value="{{weight.part_name}}"></td>
+                            <td><input type="text" style="width: 60px" step="0.01" value="{{ weight.weight }}" ></td>
+                            <td><input type="text" style="width: 60px" step="0.01" value="{{weight.ll}}" ></td>
+                            <td><input type="text" style="width: 60px" step="0.01" value="{{weight.hl}}" ></td>
+                        </tr>
+                    {% endfor %}
+
+                    </tbody>
+                </table>
+                <button class='btn btn-primary col-sm-12'id = "saveWeights">Save Weights</button>
+            </div>
+            
+        </div>
+        <div class="row">
+            <div class="col-md-12 mt-4">
                 <span><strong>Console Output</strong></span>
                 <textarea class='col-sm-12' id='logarea'rows="10" cols="25"></textarea>
             </div>
-            <div class="col-sm-2"></div>
         </div>
     </div>
-    {% endblock %}
-    <script src='/static/jquery/jquery.min.js' type='text/javascript'></script>
-    <script src='/static/bootstrap/js/bootstrap.min.js' type='text/javascript'></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.0.4/socket.io.js"></script>
+{% endblock %}
 
-    {% block custom_js %}
+{% block custom_js %}
     <script src='/static/js/default.js' type='text/javascript'></script>
-    {% endblock %}
-</body>
-</html>
+{% endblock %}
+   

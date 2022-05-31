@@ -8,3 +8,7 @@ html { overflow-y: scroll; }
 .active{
     font-weight: bold;
 }
+
+.alertify-notifier{
+    color: aliceblue;
+}

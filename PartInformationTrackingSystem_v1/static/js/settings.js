@@ -8,13 +8,24 @@ $("#saveScaleSettings").click(function(){
 });
 
 $("#saveDBSettings").click(function(){
+    
     var data = {
         "database_ip" : $("#databaseIPInput").val(),
         "database_port" : $("#databasePortInput").val(),
         "database_user" : $("#databaseUserInput").val(),
         "database_password": $("#databasePasswordInput").val()
     };
-    $.post('/settings/db', data )
+    
+    $.post('/settings/db', data ).done(function( data ) {
+        if(data == 'OK'){
+            $('#toggleDbSettings').click(); 
+            alertify.success("Success!")
+        }else{
+            alertify.error("Failed...")
+        }
+    });
+    
+    
 });
 
 $("#checkScaleConnection").click(function(){
@@ -70,19 +81,25 @@ function checkCameraConnectionCallback(data, status, xhr){
 
 $(document).ready(function () {
     console.log("Ready ...");
+    
     $("#toggleDbSettings").change(function() {
         if(this.checked) {
             $("#databaseIPInput").prop("disabled", false);
             $("#databasePortInput").prop("disabled", false);
             $("#databaseUserInput").prop("disabled", false);
             $("#databasePasswordInput").prop("disabled", false);
-            console.log("Enabled Database Settings Edit");
+            
+            // ENABLE SAVE BTN
+            $("#saveDBSettings").prop('disabled', false);
+            
         }else{
             $("#databaseIPInput").prop("disabled", true);
             $("#databasePortInput").prop("disabled", true);
             $("#databaseUserInput").prop("disabled", true);
             $("#databasePasswordInput").prop("disabled", true);
-            console.log("Disabled Database Settings Edit");
+            
+            // DISABLE SAVE BTN
+            $("#saveDBSettings").prop('disabled', true);
         }
     });
 });

@@ -1,16 +1,14 @@
 {
     "scale":[
                 {  
-                    "id": 1,
                     "name": "Scale A",
                     "scale_ip": "192.168.50.24", 
                     "scale_port": "1001"
                 },
-                {   
-                    "id": 2,
+                {  
                     "name": "Scale B",
-                    "scale_ip": "192.168.50.240", 
-                    "scale_port": "1020"
+                    "scale_ip": "192.168.50.24", 
+                    "scale_port": "1001"
                 }
             ]
  }

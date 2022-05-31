@@ -28,6 +28,7 @@ class App(Flask):
         with open(camera_params, 'r') as fileo:
             self.camera_params = json.load(fileo)
         
+        print(self.camera_params)
         # SCALE PARAMETERS
         with open(scale_params, 'r') as fileo:
             self.scale_params = json.load(fileo)
