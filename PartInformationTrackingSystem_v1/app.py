@@ -224,20 +224,27 @@ def check_db_connection():
 
 @app.route('/set_active_weight', methods=['GET', 'POST'])
 def set_active_weight():
+    
     params = flask.request.form
-    result = communicate.scale_set_weight((app.scale_params['scale_ip'], 
-                                            app.scale_params['scale_port']),
-                                            params['weight'], 
-                                            params['ll'], 
-                                            params['hl'])
-                                            
-    app.active_weight = {"weight":float(params['weight'].replace(',','.')),
-                        'll':float(params['ll'].replace(',', '.')),
-                        'hl':float(params['hl'].replace(',', '.')),
-                        "part_name": params["part_name"]
-                        }
+    
+    try:
+        result = communicate.scale_set_weight((app.scale_params['scale_ip'], 
+                                                app.scale_params['scale_port']),
+                                                params['weight'], 
+                                                params['ll'], 
+                                                params['hl'])
+                                                
+        app.active_weight = {"weight":float(params['weight'].replace(',','.')),
+                            'll':float(params['ll'].replace(',', '.')),
+                            'hl':float(params['hl'].replace(',', '.')),
+                            "part_name": params["part_name"]
+                            }
+        return app.make_response(str(result) + "#" + params["part_name"])
+    except:
+        return app.make_response("NOK")
                         
-    return app.make_response(str(result) + "#" + params["part_name"])
+    
+    
 
 @app.route('/get_weight', methods=['GET', 'POST'])
 def get_weight():

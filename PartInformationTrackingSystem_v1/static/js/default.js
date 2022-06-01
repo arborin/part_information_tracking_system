@@ -21,23 +21,44 @@ $(document).ready(function () {
 
 });
 
-$('#setActiveWeight').click(function(){
-    part_name = $("#selectActiveWeight").val();
-    row = $('#row'+part_name.replace(' ','_'));
+$('.setActiveWeight').click(function(){
+    // CHECK SCALE_A OR SCALE_B
+    let id = this.id;
+    
+    // FIND SELECTED VALUE
+    part_name = $("#selectActiveWeight"+id).val();
+    
+    // FIND ROW BY ID
+    // ID EXAMPLE: ScaleA_PistonUpperPart_SOP1
+    let row_id = id + "_" + part_name.replaceAll(' ','_')     
+    row = $("#"+row_id);
+    
     console.log(row);
     values = row.find('input')
+    
     var data = {
+        'scale': id,
         "part_name": values[0].value,
         "weight":values[1].value,
         "ll": values[2].value,
         'hl': values[3].value
     }
-    $.post('/set_active_weight', data, checkWeightWasSet)
+    
+    console.log("-----------------------------------");
+    console.log(data);
+    console.log("-----------------------------------");
+    $.post('/set_active_weight', data, checkWeightWasSet);
+    
+
 })
 
-$("#saveWeights").click(function(){
+
+$(".saveWeights").click(function(){
     var data = []
-    rows = $('.weight-row');
+    scale_id = this.id
+    
+    rows = $('.WeightRow'+scale_id);
+    
     rows.each(function(){
         inputs = $(this).find('input');
         // inputs = this.children;
@@ -49,6 +70,8 @@ $("#saveWeights").click(function(){
         });
     })
     data = JSON.stringify(data);
+    
+    console.log(data);
     $.ajax({
         method: "POST",
         url:'/settings/weights',
@@ -64,13 +87,21 @@ function reload(){
 
 function checkWeightWasSet(data, status, xhr){
     resp = xhr.responseText;
-    if( resp.includes('MH') && resp.includes('MH') && resp.includes('MM')){
-        console.log('Weight was set');
-        var res = data.split("#");
-        $("#active_weight").text(res[1])
+
+    if(resp == 'NOK'){
+        alertify.error("Connection Error...")
     }
     else{
-        console.log('Weight was not set');
+        if( resp.includes('MH') && resp.includes('MH') && resp.includes('MM')){
+            console.log('Weight was set');
+            var res = data.split("#");
+            $("#active_weight").text(res[1])
+            
+            alertify.error("Success")
+        }
+        else{
+            console.log('Weight was not set');
+        }
     }
 
 };
