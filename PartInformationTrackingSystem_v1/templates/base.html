@@ -4,22 +4,25 @@
 
 {% block body %}
     <div class='container'>
-        <div class="row">
-            
-            <div class="col-md-3">   
-                <select id="selectActiveWeight" class="form-control">
-                    {% for weight in weights %}
-                    <option value="{{weight.part_name}}">{{weight.part_name}}</option>
-                    {% endfor %}
-                </select>
-            </div>
-            <div class="col-md-2">   
-                <button class='btn btn-primary' id='setActiveWeight'>Set Active Weight</button>
-            </div>
-        </div>
+       
         <div class="row"> 
             <!-- SCALE 1 -->
             <div class="col-md-6 mt-4">
+                <div class="row mb-3">
+            
+                    <div class="col-md-6">   
+                        <select id="selectActiveWeight" class="form-control">
+                            {% for weight in weights %}
+                            <option value="{{weight.part_name}}">{{weight.part_name}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-md-6">   
+                        <button class='btn btn-primary' id='setActiveWeight'>Set Active Weight</button>
+                    </div>
+                </div>
+                
+                
                 <div class="alert alert-warning">
                     <span class="col-sm-4"><strong>Active Part: <span id='active_weight'>{% block active_weight %}{{active_weight}}{% endblock %}</span></strong></span>
                 </div>
@@ -44,10 +47,10 @@
                             <td><input type="text" step="0.01" value="{{weight.hl}}" ></td> -->
                             
                             <td><strong>{{loop.index}}</strong></td>
-                            <td><input type="text" style="width: 250px" value="{{weight.part_name}}"></td>
-                            <td><input type="text" style="width: 60px" step="0.01" value="{{ weight.weight }}" ></td>
-                            <td><input type="text" style="width: 60px" step="0.01" value="{{weight.ll}}" ></td>
-                            <td><input type="text" style="width: 60px" step="0.01" value="{{weight.hl}}" ></td>
+                            <td><input class="form-control" type="text" style="width: 250px" value="{{weight.part_name}}"></td>
+                            <td><input class="form-control" type="text" style="width: 60px" step="0.01" value="{{ weight.weight }}" ></td>
+                            <td><input class="form-control" type="text" style="width: 60px" step="0.01" value="{{weight.ll}}" ></td>
+                            <td><input class="form-control" type="text" style="width: 60px" step="0.01" value="{{weight.hl}}" ></td>
                         </tr>
                     {% endfor %}
 
@@ -59,6 +62,21 @@
             
             <!-- SCALE 2 -->
             <div class="col-md-6 mt-4">
+                
+                <div class="row mb-3">
+            
+                    <div class="col-md-6">   
+                        <select id="selectActiveWeight" class="form-control">
+                            {% for weight in weights %}
+                            <option value="{{weight.part_name}}">{{weight.part_name}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-md-6">   
+                        <button class='btn btn-primary' id='setActiveWeight'>Set Active Weight</button>
+                    </div>
+                </div>
+                
                 <div class="alert alert-warning">
                     <span class="col-sm-4"><strong>Active Part: <span id='active_weight'>...</span></strong></span>
                 </div>
@@ -83,10 +101,10 @@
                             <td><input type="text" step="0.01" value="{{weight.hl}}" ></td> -->
                             
                             <td><strong>{{loop.index}}</strong></td>
-                            <td><input type="text" style="width: 250px" value="{{weight.part_name}}"></td>
-                            <td><input type="text" style="width: 60px" step="0.01" value="{{ weight.weight }}" ></td>
-                            <td><input type="text" style="width: 60px" step="0.01" value="{{weight.ll}}" ></td>
-                            <td><input type="text" style="width: 60px" step="0.01" value="{{weight.hl}}" ></td>
+                            <td><input class="form-control" type="text" style="width: 250px" value="{{weight.part_name}}"></td>
+                            <td><input class="form-control" type="text" style="width: 60px" step="0.01" value="{{ weight.weight }}" ></td>
+                            <td><input class="form-control" type="text" style="width: 60px" step="0.01" value="{{weight.ll}}" ></td>
+                            <td><input class="form-control" type="text" style="width: 60px" step="0.01" value="{{weight.hl}}" ></td>
                         </tr>
                     {% endfor %}
 
@@ -96,10 +114,13 @@
             </div>
             
         </div>
+        
+    </div>
+    <div class="container-fluid">
         <div class="row">
             <div class="col-md-12 mt-4">
                 <span><strong>Console Output</strong></span>
-                <textarea class='col-sm-12' id='logarea'rows="10" cols="25"></textarea>
+                <textarea class='col-sm-12 form-control' id='logarea'rows="10" cols="25"></textarea>
             </div>
         </div>
     </div>
