@@ -49,8 +49,8 @@
                                     <input type='text' value='{{ scale.scale_port }}' class='form-control' id='scalePortInput-{{ index }}' autocomplete="off">
                                 </div>
                                 <div class='col-sm-12'>
-                                    <button type='button' class='btn btn-secondary' id='checkScaleConnection-{{ index }}'>Check Connection</button>
-                                    <button type='button' class='btn btn-primary' id="saveScaleSettings-{{ index }}">Save Settings</button>
+                                    <button type='button' class='btn btn-secondary' disabled id='checkScaleConnection-{{ index }}'>Check Connection</button>
+                                    <button type='button' class='btn btn-primary' disabled id="saveScaleSettings-{{ index }}">Save Settings</button>
                                 </div>
                             </div>
                         </form>
@@ -129,7 +129,7 @@
                                     </select>
                                 </div>
                                 <div class='col-sm-12'>
-                                    <button type='button' class='btn btn-secondary' id='checkCameraConnection'>Check Connection</button>
+                                    <button type='button' class='btn btn-secondary' disabled id='checkCameraConnection'>Check Connection</button>
                                     <button type='button' class='btn btn-primary' disabled id="saveCameraSettings">Save Settings</button>
                                 </div>
                             </div> 

@@ -62,12 +62,14 @@ $(".saveWeights").click(function(){
     rows.each(function(){
         inputs = $(this).find('input');
         // inputs = this.children;
-        data.push({
-            "part_name":inputs[0].value,
-            "weight":inputs[1].value,
-            "ll":inputs[2].value,
-            "hl": inputs[3].value
-        });
+        if(inputs[0].value != ''){
+            data.push({
+                "part_name":inputs[0].value,
+                "weight":inputs[1].value,
+                "ll":inputs[2].value,
+                "hl": inputs[3].value
+            });
+        }
     })
     data = JSON.stringify(data);
     
