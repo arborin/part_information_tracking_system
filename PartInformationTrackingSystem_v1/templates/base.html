@@ -7,137 +7,139 @@
        
         <div class="row"> 
             <!-- SCALE 1 -->
-            <div class="col-md-6 mt-4">
-                <div class="row mb-3">
             
-                    <div class="col-md-6">   
-                        <select id="selectActiveWeightScaleA" class="form-control">
-                            {% for weight in weights %}
-                            <option value="{{weight.part_name}}">{{weight.part_name}}</option>
-                            {% endfor %}
-                        </select>
+            <div class="col-md-6 mt-4">
+                <div class="part-table">
+                    
+                    <div class="row mb-3">
+                        <div class="col-md-12" style="border-bottom: 1px solid  rgba(0,123,255,0.36);">
+                            <p class="text-primary"><strong><i class="fa-solid fa-scale-balanced"></i> Waage A</strong></p>
+                        </div>
                     </div>
-                    <div class="col-md-6">   
-                        <button class='btn btn-primary setActiveWeight' id='ScaleA'>Set Active Weight</button>
+                    
+                    <div class="row mb-3">
+                        <div class="col-md-6">   
+                            <select id="selectActiveWeightScaleA" class="form-control">
+                                {% for weight in weights %}
+                                <option value="{{weight.part_name}}">{{weight.part_name}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-md-6">   
+                            <button class='btn btn-primary setActiveWeight' id='ScaleA'>Set Active Weight</button>
+                        </div>
                     </div>
-                </div>
-                
-                
-                <div class="alert alert-warning">
-                    <span class="col-sm-4"><strong>Active Part: <span id='ActiveWeightScaleA'>No Part active</span></strong></span>
-                </div>
+                    
+                    
+                    <div class="alert alert-warning">
+                        <span class="col-sm-4"><strong>Active Part: <span id='ActiveWeightScaleA'>No Part active</span></strong></span>
+                    </div>
 
-                <table class="table table-bordered table-sm mt-4">
-                    <thead >
-                    <tr>
-                        <th style="background-color:#f8f9fa">No.</th>
-                        <th style="background-color:#f8f9fa">Partname</th>
-                        <th style="background-color:#f8f9fa">Zero Weight</th>
-                        <th style="background-color:#f8f9fa">Low Limit</th>
-                        <th style="background-color:#f8f9fa">High Limit</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                        {% for weight in weights %}
-                            <tr class="WeightRowScaleA" id="{{'ScaleA_'+weight.part_name|replace(' ','_')}}">
-                                <!-- <td><strong>{{loop.index}}</strong></td>
-                                <td><input type="text" value="{{weight.part_name}}"></td>
-                                <td><input type="text" step="0.01" value="{{ weight.weight }}" ></td>
-                                <td><input type="text" step="0.01" value="{{weight.ll}}" ></td>
-                                <td><input type="text" step="0.01" value="{{weight.hl}}" ></td> -->
-                                
-                                <td><strong>{{loop.index}}</strong></td>
-                                <td><input class="form-control" type="text" style="width: 250px" value="{{weight.part_name}}"></td>
-                                <td><input class="form-control" type="text" style="width: 60px" step="0.01" value="{{ weight.weight }}" ></td>
-                                <td><input class="form-control" type="text" style="width: 60px" step="0.01" value="{{weight.ll}}" ></td>
-                                <td><input class="form-control" type="text" style="width: 60px" step="0.01" value="{{weight.hl}}" ></td>
-                            </tr>
-                        {% endfor %}
-                        <tr class="WeightRowScaleA" id="">                            
-                            <td><strong>{{ weights|length + 1 }}</strong></td>
-                            <td><input class="form-control" type="text" style="width: 250px" placeholder=""></td>
-                            <td><input class="form-control" type="text" style="width: 60px" step="0.01" placeholder="" ></td>
-                            <td><input class="form-control" type="text" style="width: 60px" step="0.01" placeholder="" ></td>
-                            <td><input class="form-control" type="text" style="width: 60px" step="0.01" placeholder="" ></td>
+                    <table class="table table-bordered table-sm mt-4">
+                        <thead >
+                        <tr>
+                            <th style="background-color:#f8f9fa"><input class="" type="checkbox" value="" id="toggle_row"></th>
+                            <th style="background-color:#f8f9fa">#</th>
+                            <th style="background-color:#f8f9fa">Partname</th>
+                            <th style="background-color:#f8f9fa">Zero Weight</th>
+                            <th style="background-color:#f8f9fa">Low Limit</th>
+                            <th style="background-color:#f8f9fa">High Limit</th>
                         </tr>
-
-                    </tbody>
-                </table>
-                <button class='btn btn-primary col-sm-12 saveWeights' id="ScaleA">Save Weights</button>
+                        </thead>
+                        <tbody>
+                            {% for weight in weights %}
+                                <tr class="WeightRowScaleA" id="{{'ScaleA_'+weight.part_name|replace(' ','_')}}">
+                                    <td class="align-middle"><input class="" type="checkbox" value="" id="toggle_row"></td>
+                                    <td class="align-middle"><strong>{{loop.index}}</strong></td>
+                                    <td><input class="form-control" type="text" style="width: 240px" value="{{weight.part_name}}"></td>
+                                    <td><input class="form-control" type="text" style="width: 60px" step="0.01" value="{{ weight.weight }}" ></td>
+                                    <td><input class="form-control" type="text" style="width: 60px" step="0.01" value="{{weight.ll}}" ></td>
+                                    <td><input class="form-control" type="text" style="width: 60px" step="0.01" value="{{weight.hl}}" ></td>
+                                </tr>
+                            {% endfor %}
+                            <tr class="WeightRowScaleA" id="">
+                                <td>&nbsp;</td>                           
+                                <td><strong>{{ weights|length + 1 }}</strong></td>
+                                <td><input class="form-control" type="text" style="width: 240px" placeholder=""></td>
+                                <td><input class="form-control" type="text" style="width: 60px" step="0.01" placeholder="" ></td>
+                                <td><input class="form-control" type="text" style="width: 60px" step="0.01" placeholder="" ></td>
+                                <td><input class="form-control" type="text" style="width: 60px" step="0.01" placeholder="" ></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <button class='btn btn-primary col-sm-12 saveWeights' id="ScaleA">Save Weights</button>
+                </div>
             </div>
             
             
             <!-- SCALE 2 -->
             <div class="col-md-6 mt-4">
-                
-                <div class="row mb-3">
-            
-                    <div class="col-md-6">   
-                        <select id="selectActiveWeightScaleB" class="form-control">
-                            {% for weight in weights %}
-                            <option value="{{weight.part_name}}">{{weight.part_name}}</option>
-                            {% endfor %}
-                        </select>
+                <div class="part-table">
+                    
+                    <div class="row mb-3">
+                        <div class="col-md-12" style="border-bottom: 1px solid  rgba(0,123,255,0.36);">
+                            <p class="text-primary"><strong><i class="fa-solid fa-scale-balanced"></i> Waage B</strong></p>
+                        </div>
                     </div>
-                    <div class="col-md-6">   
-                        <button class='btn btn-primary setActiveWeight' id='ScaleB'>Set Active Weight</button>
-                    </div>
-                </div>
+                    
+                    <div class="row mb-3">
                 
-                <div class="alert alert-warning">
-                    <span class="col-sm-4"><strong>Active Part: <span id='ActiveWeightScaleB'>No Part active</span></strong></span>
-                </div>
+                        <div class="col-md-6">   
+                            <select id="selectActiveWeightScaleB" class="form-control">
+                                {% for weight in weights %}
+                                <option value="{{weight.part_name}}">{{weight.part_name}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-md-6">   
+                            <button class='btn btn-primary setActiveWeight' id='ScaleB'>Set Active Weight</button>
+                        </div>
+                    </div>
+                    
+                    <div class="alert alert-warning">
+                        <span class="col-sm-4"><strong>Active Part: <span id='ActiveWeightScaleB'>No Part active</span></strong></span>
+                    </div>
 
-                <table class="table table-bordered table-sm mt-4">
-                    <thead >
-                    <tr>
-                        <th style="background-color:#f8f9fa">No.</th>
-                        <th style="background-color:#f8f9fa">Partname</th>
-                        <th style="background-color:#f8f9fa">Zero Weight</th>
-                        <th style="background-color:#f8f9fa">Low Limit</th>
-                        <th style="background-color:#f8f9fa">High Limit</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                        {% for weight in weights %}
-                            <tr class="WeightRowScaleB" id="{{'ScaleB_'+weight.part_name|replace(' ','_')}}">
-                                <!-- <td><strong>{{loop.index}}</strong></td>
-                                <td><input type="text" value="{{weight.part_name}}"></td>
-                                <td><input type="text" step="0.01" value="{{ weight.weight }}" ></td>
-                                <td><input type="text" step="0.01" value="{{weight.ll}}" ></td>
-                                <td><input type="text" step="0.01" value="{{weight.hl}}" ></td> -->
-                                
-                                <td><strong>{{loop.index}}</strong></td>
-                                <td><input class="form-control" type="text" style="width: 250px" value="{{weight.part_name}}"></td>
-                                <td><input class="form-control" type="text" style="width: 60px" step="0.01" value="{{ weight.weight }}" ></td>
-                                <td><input class="form-control" type="text" style="width: 60px" step="0.01" value="{{weight.ll}}" ></td>
-                                <td><input class="form-control" type="text" style="width: 60px" step="0.01" value="{{weight.hl}}" ></td>
+                    <table class="table table-bordered table-sm mt-4">
+                        <thead >
+                            <tr>
+                                <th style="background-color:#f8f9fa"><input class="" type="checkbox" value="" id="toggle_row"></th>
+                                <th style="background-color:#f8f9fa">#</th>
+                                <th style="background-color:#f8f9fa">Partname</th>
+                                <th style="background-color:#f8f9fa">Zero Weight</th>
+                                <th style="background-color:#f8f9fa">Low Limit</th>
+                                <th style="background-color:#f8f9fa">High Limit</th>
                             </tr>
-                        {% endfor %}
-                        <tr class="WeightRowScaleB" id="">                            
-                            <td><strong>{{ weights|length + 1 }}</strong></td>
-                            <td><input class="form-control" type="text" style="width: 250px" placeholder=""></td>
-                            <td><input class="form-control" type="text" style="width: 60px" step="0.01" placeholder="" ></td>
-                            <td><input class="form-control" type="text" style="width: 60px" step="0.01" placeholder="" ></td>
-                            <td><input class="form-control" type="text" style="width: 60px" step="0.01" placeholder="" ></td>
-                        </tr>
-
-                    </tbody>
-                </table>
-                <button class='btn btn-primary col-sm-12 saveWeights' id="ScaleB">Save Weights</button>
+                        </thead>
+                        <tbody>
+                            {% for weight in weights %}
+                                <tr class="WeightRowScaleA" id="{{'ScaleA_'+weight.part_name|replace(' ','_')}}">
+                                    <td class="align-middle"><input class="" type="checkbox" value="" id="toggle_row"></td>
+                                    <td class="align-middle"><strong>{{loop.index}}</strong></td>
+                                    <td><input class="form-control" type="text" style="width: 240px" value="{{weight.part_name}}"></td>
+                                    <td><input class="form-control" type="text" style="width: 60px" step="0.01" value="{{ weight.weight }}" ></td>
+                                    <td><input class="form-control" type="text" style="width: 60px" step="0.01" value="{{weight.ll}}" ></td>
+                                    <td><input class="form-control" type="text" style="width: 60px" step="0.01" value="{{weight.hl}}" ></td>
+                                </tr>
+                            {% endfor %}
+                            <tr class="WeightRowScaleA" id="">
+                                <td>&nbsp;</td>                           
+                                <td><strong>{{ weights|length + 1 }}</strong></td>
+                                <td><input class="form-control" type="text" style="width: 240px" placeholder=""></td>
+                                <td><input class="form-control" type="text" style="width: 60px" step="0.01" placeholder="" ></td>
+                                <td><input class="form-control" type="text" style="width: 60px" step="0.01" placeholder="" ></td>
+                                <td><input class="form-control" type="text" style="width: 60px" step="0.01" placeholder="" ></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <button class='btn btn-primary col-sm-12 saveWeights' id="ScaleB">Save Weights</button>
+                </div>
             </div>
             
         </div>
         
     </div>
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-12 mt-4">
-                <span><strong>Console Output</strong></span>
-                <textarea class='col-sm-12 form-control' id='logarea'rows="10" cols="25"></textarea>
-            </div>
-        </div>
-    </div>
+   
 {% endblock %}
 
 {% block custom_js %}

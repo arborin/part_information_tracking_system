@@ -141,6 +141,14 @@ def settings():
 @app.route('/console')
 def console():
     return render_template('console.html')
+    
+    
+@app.route('/console-output')
+def console_output():
+    return render_template('console.html')
+    
+    
+     
 
 @app.route('/settings/db', methods=["GET", "POST"])
 def set_db_params():

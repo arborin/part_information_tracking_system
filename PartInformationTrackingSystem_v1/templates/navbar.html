@@ -11,13 +11,16 @@
             <li class="nav-item {{ 'active' if active_page == 'settings' else '' }}">
                 <a class="nav-link " href="/settings">Connection Settings <span class="sr-only">(current)</span></a>
             </li>
-            <li class="nav-item " >
+            <!-- <li class="nav-item " >
                 <a class="nav-link" href="/console">Console Output <span class="sr-only">(current)</span></a>
+            </li> -->
+            <li class="nav-item {{ 'active' if active_page == 'console' else '' }}"" >
+                <a class="nav-link" href="/console-output">Console Output <span class="sr-only">(current)</span></a>
             </li>
             </ul>
         </div>
         <div>
-            <h5 class="v-center">Part Information Tracking System </h5>
+            <h6 class="v-center text-dark"><strong> Information Tracking System </strong></h6>
         </div>
         <a class="navbar-brand" href="#"><img src="/static/KTB_Logo.png" height="30"
                 style="padding-left: 20px;"></a>
