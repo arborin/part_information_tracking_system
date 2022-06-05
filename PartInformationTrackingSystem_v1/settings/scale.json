@@ -1,1 +1,1 @@
-{"scale": [{"name": "Scale A", "scale_ip": "192.168.50.100", "scale_port": "1000"}, {"name": "Scale B", "scale_ip": "192.168.50.200", "scale_port": "2000"}]}
+{"scale": [{"active": 1, "name": "Scale A", "scale_ip": "192.168.50.102", "scale_port": "1000"}, {"active": 0, "name": "Scale B", "scale_ip": "192.168.50.201", "scale_port": "2000"}]}

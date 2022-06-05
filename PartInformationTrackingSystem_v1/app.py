@@ -127,10 +127,13 @@ def test():
     
     with open(app.weights_file, 'r') as fileo:
         app.weights = json.load(fileo)
+    
+    with open(app.scale_file, 'r') as fileo:
+        app.scale_params = json.load(fileo)
         
     active = app.active_weight["part_name"] if app.active_weight is not None else "No Part active"
     
-    return render_template('base.html', title = title, weights = app.weights, active_weight = active)
+    return render_template('base.html', title = title, weights = app.weights, scale_params = app.scale_params,  active_weight = active)
 
 @app.route('/settings')
 def settings():

@@ -59,6 +59,8 @@ $("#checkDBConnection").click(function(){
     });
 });
 
+
+
 $('#saveCameraSettings').click(saveCameraSettings);
 
 function saveCameraSettings(){
@@ -87,7 +89,6 @@ function checkCameraConnectionCallback(data, status, xhr){
 
 
 $(document).ready(function () {
-    console.log("Ready ...");
     
     $("#toggleDbSettings").change(function() {
         if(this.checked) {
@@ -109,4 +110,18 @@ $(document).ready(function () {
             $("#saveDBSettings").prop('disabled', true);
         }
     });
+    
+    
+    $(".connection-settings").change(function(){
+        let id = this.id.split('-')[1];
+        if(this.checked) {
+            $("#scaleIpInput-"+id).prop("disabled", false);
+            $("#scalePortInput-"+id).prop("disabled", false);
+            $("#saveScaleSettings-"+id).prop("disabled", false);
+        }else{
+            $("#scaleIpInput-"+id).prop("disabled", true);
+            $("#scalePortInput-"+id).prop("disabled", true);
+            $("#saveScaleSettings-"+id).prop("disabled", true);
+        }
+    })
 });
