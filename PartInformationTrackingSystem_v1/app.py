@@ -187,10 +187,25 @@ def set_scale_parames():
     app.logger.info(app.scale_params)
     args = dict(args)
     scale_id = int(args['scale_id'][0])
-    
-    
+
     app.scale_params['scale'][scale_id]['scale_ip'] = args['scale_ip'][0]
     app.scale_params['scale'][scale_id]['scale_port'] = args['scale_port'][0]
+    
+    app.logger.info(app.scale_params)
+    app.write_settings('scale')
+    
+    return app.make_response('OK')
+    
+@app.route('/settings/scale/enable', methods=["GET", "POST"])
+def set_scale_b():
+    args = flask.request.form
+
+    app.logger.info(app.scale_params)
+    
+    args = dict(args)
+    active = int(args['active'][0])
+    
+    app.scale_params['scale'][1]['active'] = active
     
     app.logger.info(app.scale_params)
     app.write_settings('scale')

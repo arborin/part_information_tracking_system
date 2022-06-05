@@ -109,4 +109,33 @@ function checkWeightWasSet(data, status, xhr){
 };
 
 
+$("#disableScaleB").click(function(){
+    var data = {
+        "active" : 0
+    };
+    $.post('/settings/scale/enable', data, function(data, status, xhr){
+        if( xhr.responseText == "OK"){
+            reload();
+            alertify.success("OK");
+        }else{
+            alertify.error("Can not enable Scale B");
+        }
+    });
+});
+
+$("#enableScaleB").click(function(){
+    var data = {
+        "active" : 1
+    };
+    $.post('/settings/scale/enable', data, function(data, status, xhr){
+        if( xhr.responseText == "OK"){
+            reload();
+            alertify.success("OK");
+        }else{
+            alertify.error("Can not enable Scale B");
+        }
+    });
+});
+
+
 

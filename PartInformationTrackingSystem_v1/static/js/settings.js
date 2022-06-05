@@ -74,14 +74,18 @@ function saveCameraSettings(){
     };
     $.post('/settings/camera',data, saveCameraSettingsCallback);
 }
+
+
 function saveCameraSettingsCallback(data, status, xhr){
     alert('Settings Saved')
 };
+
 
 $('#checkCameraConnection').click(function(){
     saveCameraSettings();
     $.post('/settings/camera/checkconnection', null, checkCameraConnectionCallback);
 })
+
 
 function checkCameraConnectionCallback(data, status, xhr){
     alert(xhr.responseText);
@@ -123,5 +127,8 @@ $(document).ready(function () {
             $("#scalePortInput-"+id).prop("disabled", true);
             $("#saveScaleSettings-"+id).prop("disabled", true);
         }
-    })
+    });
+    
+    
+   
 });
