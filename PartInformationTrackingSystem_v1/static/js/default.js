@@ -53,35 +53,49 @@ $('.setActiveWeight').click(function(){
 })
 
 
-$(".saveWeights").click(function(){
-    var data = []
-    scale_id = this.id
-    
-    rows = $('.WeightRow'+scale_id);
-    
-    rows.each(function(){
-        inputs = $(this).find('input');
-        // inputs = this.children;
-        if(inputs[0].value != ''){
-            data.push({
-                "part_name":inputs[0].value,
-                "weight":inputs[1].value,
-                "ll":inputs[2].value,
-                "hl": inputs[3].value
-            });
-        }
-    })
-    data = JSON.stringify(data);
-    
-    console.log(data);
-    $.ajax({
-        method: "POST",
-        url:'/settings/weights',
-        data : data,
-        contentType:"application/json; charset=utf-8",
-        success:reload
-    } );
-})
+$(document).ready(function () {
+    $(".saveWeights").click(function(){
+        var data = []
+        scale_id = this.id
+        
+        
+        
+        rows = $('.WeightRow'+scale_id);
+        // console.log(scale_id);
+        console.log(rows);
+        
+        rows.each(function(){
+            inputs = $(this).find('input');
+            // inputs = this.children;
+            if (inputs[1].value != ''){
+                data.push({
+                    "part_name":inputs[1].value,
+                    "part_number": inputs[2].value,
+                    "weight":inputs[3].value,
+                    "ll":inputs[4].value,
+                    "hl": inputs[5].value,
+                    "scale": scale_id
+                });
+            }
+        })
+        
+        let send_data = {};
+        send_data['weight'] = data;
+        send_data['scale_id'] = scale_id;
+        
+        data = JSON.stringify(send_data);
+        
+        console.log(data);
+        
+        $.ajax({
+            method: "POST",
+            url:'/settings/weights',
+            data : data,
+            contentType:"application/json; charset=utf-8",
+            success:reload
+        } );
+    });
+});
 
 function reload(){
     location.reload();

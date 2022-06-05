@@ -51,28 +51,35 @@
                         <tr>
                             <th style="background-color:#f8f9fa"><input class="" type="checkbox" value="" id="toggle_row"></th>
                             <th style="background-color:#f8f9fa">#</th>
-                            <th style="background-color:#f8f9fa">Partname</th>
-                            <th style="background-color:#f8f9fa">Partnumber</th>
+                            <th style="background-color:#f8f9fa">Part name</th>
+                            <th style="background-color:#f8f9fa">Part number</th>
                             <th style="background-color:#f8f9fa">Zero Weight</th>
                             <th style="background-color:#f8f9fa">Low Limit</th>
                             <th style="background-color:#f8f9fa">High Limit</th>
                         </tr>
                         </thead>
                         <tbody>
+                            {% set count = namespace(value=1) %}
+                            
                             {% for weight in weights %}
-                                <tr class="WeightRowScaleA" id="{{'ScaleA_'+weight.part_name|replace(' ','_')}}">
-                                    <td class="align-middle"><input class="" type="checkbox" value="" id="toggle_row"></td>
-                                    <td class="align-middle"><strong>{{loop.index}}</strong></td>
-                                    <td><input class="form-control" type="text" style="width: 240px" value="{{weight.part_name}}"></td>
-                                    <td><input class="form-control" type="text" style="width: 240px" value="{{weight.part_name}}"></td>
-                                    <td><input class="form-control" type="text" style="width: 60px" step="0.01" value="{{ weight.weight }}" ></td>
-                                    <td><input class="form-control" type="text" style="width: 60px" step="0.01" value="{{weight.ll}}" ></td>
-                                    <td><input class="form-control" type="text" style="width: 60px" step="0.01" value="{{weight.hl}}" ></td>
-                                </tr>
-                                {% endfor %}
-                                <tr class="WeightRowScaleA" id="">
-                                <td>&nbsp;</td>                           
-                                <td><strong>{{ weights|length + 1 }}</strong></td>
+                                {% if weight.scale == 'ScaleA' %}
+                                    <tr class="WeightRowScaleA" id="{{'ScaleA_'+weight.part_name|replace(' ','_')}}">
+                                        <td class="align-middle"><input class="" type="checkbox" value="" id="toggle_row"></td>
+                                        <td class="align-middle"><strong>{{ count.value }}</strong></td>
+                                        <td><input class="form-control" type="text" style="width: 240px" value="{{ weight.part_name }}"></td>
+                                        <td><input class="form-control" type="text" style="width: 240px" value="{{ weight.part_number }}"></td>
+                                        <td><input class="form-control" type="text" style="width: 60px" step="0.01" value="{{ weight.weight }}" ></td>
+                                        <td><input class="form-control" type="text" style="width: 60px" step="0.01" value="{{ weight.ll }}" ></td>
+                                        <td><input class="form-control" type="text" style="width: 60px" step="0.01" value="{{ weight.hl }}" ></td>
+                                    </tr>
+                                    
+                                    {% set count.value = count.value + 1 %}
+                                {% endif %}
+                            {% endfor %}
+                            
+                            <tr class="WeightRowScaleA" id="">
+                                <td><input class="" type="checkbox" value="" id="toggle_row"></td>                        
+                                <td><strong>{{ count.value  }}</strong></td>
                                 <td><input class="form-control" type="text" style="width: 240px" placeholder=""></td>
                                 <td><input class="form-control" type="text" style="width: 240px" placeholder=""></td>
                                 <td><input class="form-control" type="text" style="width: 60px" step="0.01" placeholder="" ></td>
@@ -120,26 +127,36 @@
                             <tr>
                                 <th style="background-color:#f8f9fa"><input class="" type="checkbox" value="" id="toggle_row"></th>
                                 <th style="background-color:#f8f9fa">#</th>
-                                <th style="background-color:#f8f9fa">Partname</th>
+                                <th style="background-color:#f8f9fa">Part name</th>
+                                <th style="background-color:#f8f9fa">Part Number</th>
                                 <th style="background-color:#f8f9fa">Zero Weight</th>
                                 <th style="background-color:#f8f9fa">Low Limit</th>
                                 <th style="background-color:#f8f9fa">High Limit</th>
                             </tr>
                         </thead>
                         <tbody>
+                            {% set count = namespace(value=1) %}
+                            
                             {% for weight in weights %}
-                                <tr class="WeightRowScaleA" id="{{'ScaleA_'+weight.part_name|replace(' ','_')}}">
-                                    <td class="align-middle"><input class="" type="checkbox" value="" id="toggle_row"></td>
-                                    <td class="align-middle"><strong>{{loop.index}}</strong></td>
-                                    <td><input class="form-control" type="text" style="width: 240px" value="{{weight.part_name}}"></td>
-                                    <td><input class="form-control" type="text" style="width: 60px" step="0.01" value="{{ weight.weight }}" ></td>
-                                    <td><input class="form-control" type="text" style="width: 60px" step="0.01" value="{{weight.ll}}" ></td>
-                                    <td><input class="form-control" type="text" style="width: 60px" step="0.01" value="{{weight.hl}}" ></td>
-                                </tr>
+                                
+                                {% if weight.scale == 'ScaleB' %}
+                                    <tr class="WeightRowScaleB" id="{{'ScaleB_'+weight.part_name|replace(' ','_')}}">
+                                        <td class="align-middle"><input class="" type="checkbox" value="" id="toggle_row"></td>
+                                        <td class="align-middle"><strong>{{ count.value }}</strong></td>
+                                        <td><input class="form-control" type="text" style="width: 240px" value="{{ weight.part_name }}"></td>
+                                        <td><input class="form-control" type="text" style="width: 240px" value="{{ weight.part_number }}"></td>
+                                        <td><input class="form-control" type="text" style="width: 60px" step="0.01" value="{{ weight.weight }}" ></td>
+                                        <td><input class="form-control" type="text" style="width: 60px" step="0.01" value="{{ weight.ll }}" ></td>
+                                        <td><input class="form-control" type="text" style="width: 60px" step="0.01" value="{{ weight.hl }}" ></td>
+                                    </tr>
+                                    
+                                    {% set count.value = count.value + 1 %}
+                                {% endif %}
                             {% endfor %}
-                            <tr class="WeightRowScaleA" id="">
-                                <td>&nbsp;</td>                           
-                                <td><strong>{{ weights|length + 1 }}</strong></td>
+                            <tr class="WeightRowScaleB" id="">
+                                <td class="align-middle"><input class="" type="checkbox" value="" id="toggle_row"></td>                         
+                                <td><strong>{{ count.value }}</strong></td>
+                                <td><input class="form-control" type="text" style="width: 240px" placeholder=""></td>
                                 <td><input class="form-control" type="text" style="width: 240px" placeholder=""></td>
                                 <td><input class="form-control" type="text" style="width: 60px" step="0.01" placeholder="" ></td>
                                 <td><input class="form-control" type="text" style="width: 60px" step="0.01" placeholder="" ></td>

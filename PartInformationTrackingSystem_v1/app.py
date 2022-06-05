@@ -214,8 +214,26 @@ def set_scale_b():
 
 @app.route('/settings/weights', methods=["GET", "POST"])
 def set_weights():
-    args = flask.request.json
-    app.weights = args
+    weights = flask.request.json['weight']
+    scale_id = flask.request.json['scale_id']
+
+    # DELETE ALL OLD VALUES FROM JSON
+    second_scale = []
+    
+    for index in range(len( app.weights)):
+        if app.weights[index]['scale'] != scale_id:
+            second_scale.append(app.weights[index])
+    
+    app.weights = second_scale
+
+    print("===========================")
+    print(app.weights)    
+    print("===========================")
+    app.weights = app.weights + weights
+    print(app.weights)
+    print("===========================")
+    
+    # app.weights = args
     app.write_settings('weights')
     return app.make_response("OK")
 
