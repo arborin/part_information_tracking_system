@@ -3,12 +3,23 @@
 {% extends "layout.html" %}
 
 {% block body %}
-    <div class='container'>
+    <div class='container-fluid'>
+        
+        <div class="row">
+            <div class="col-md-12">
+                {% if scale_params.scale[1].active %}
+                    <button class='btn btn-warning col-sm-1' id="disableScaleB">Disable Scale B</button>
+                {% else %}
+                    <button class='btn btn-success col-sm-1' id="enableScaleA">Enable Scale B</button>
+                {% endif %}
+            </div>
+        </div>
        
         <div class="row"> 
             <!-- SCALE 1 -->
             
             <div class="col-md-6 mt-4">
+               
                 <div class="part-table">
                     
                     <div class="row mb-3">
@@ -41,6 +52,7 @@
                             <th style="background-color:#f8f9fa"><input class="" type="checkbox" value="" id="toggle_row"></th>
                             <th style="background-color:#f8f9fa">#</th>
                             <th style="background-color:#f8f9fa">Partname</th>
+                            <th style="background-color:#f8f9fa">Partnumber</th>
                             <th style="background-color:#f8f9fa">Zero Weight</th>
                             <th style="background-color:#f8f9fa">Low Limit</th>
                             <th style="background-color:#f8f9fa">High Limit</th>
@@ -52,14 +64,16 @@
                                     <td class="align-middle"><input class="" type="checkbox" value="" id="toggle_row"></td>
                                     <td class="align-middle"><strong>{{loop.index}}</strong></td>
                                     <td><input class="form-control" type="text" style="width: 240px" value="{{weight.part_name}}"></td>
+                                    <td><input class="form-control" type="text" style="width: 240px" value="{{weight.part_name}}"></td>
                                     <td><input class="form-control" type="text" style="width: 60px" step="0.01" value="{{ weight.weight }}" ></td>
                                     <td><input class="form-control" type="text" style="width: 60px" step="0.01" value="{{weight.ll}}" ></td>
                                     <td><input class="form-control" type="text" style="width: 60px" step="0.01" value="{{weight.hl}}" ></td>
                                 </tr>
-                            {% endfor %}
-                            <tr class="WeightRowScaleA" id="">
+                                {% endfor %}
+                                <tr class="WeightRowScaleA" id="">
                                 <td>&nbsp;</td>                           
                                 <td><strong>{{ weights|length + 1 }}</strong></td>
+                                <td><input class="form-control" type="text" style="width: 240px" placeholder=""></td>
                                 <td><input class="form-control" type="text" style="width: 240px" placeholder=""></td>
                                 <td><input class="form-control" type="text" style="width: 60px" step="0.01" placeholder="" ></td>
                                 <td><input class="form-control" type="text" style="width: 60px" step="0.01" placeholder="" ></td>
@@ -73,9 +87,10 @@
             
             
             <!-- SCALE 2 -->
+            
+            {% if scale_params.scale[1].active %}
             <div class="col-md-6 mt-4">
                 <div class="part-table">
-                    
                     <div class="row mb-3">
                         <div class="col-md-12" style="border-bottom: 1px solid  rgba(0,123,255,0.36);">
                             <p class="text-primary"><strong><i class="fa-solid fa-scale-balanced"></i> Waage B</strong></p>
@@ -135,7 +150,8 @@
                     <button class='btn btn-primary col-sm-12 saveWeights' id="ScaleB">Save Weights</button>
                 </div>
             </div>
-            
+               
+            {% endif%}
         </div>
         
     </div>
