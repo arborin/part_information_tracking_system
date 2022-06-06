@@ -152,4 +152,36 @@ $("#enableScaleB").click(function(){
 });
 
 
+$(".enable-tbl-inputs").change(function(){
+    
+    let id = this.id.split('-');
+    let scale = id[0];
+    let row_id = id[1];
+    
+    if(this.checked) {
+        $("." + scale + "-input-"+row_id).prop("disabled", false);
+
+    }else{
+        $("." + scale + "-input-"+row_id).prop("disabled", true);
+       
+    }
+});
+
+
+$(".enable-all-inputs").change(function(){
+    let id = this.id.split('-')[1]; // id - ScaleA or ScaleB
+    
+
+    if(this.checked) {
+        $("[class*='" + id + "-input-']").prop("disabled", false);
+        
+        $(".checkbox-"+id).prop("checked", true);
+    }else{
+        $("[class*='" + id + "-input-']").prop("disabled", true);
+        $(".checkbox-"+id).prop("checked", false);
+    }
+});
+
+
+
 
