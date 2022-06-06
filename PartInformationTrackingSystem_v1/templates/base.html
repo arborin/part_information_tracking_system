@@ -68,11 +68,11 @@
                                     <tr class="WeightRowScaleA" id="{{'ScaleA_'+weight.part_name|replace(' ','_')}}">
                                         <td class="align-middle"><input class="enable-tbl-inputs checkbox-ScaleA" autocomplete="off" type="checkbox" value="0" id="ScaleA-{{ count.value }}"></td>
                                         <td class="align-middle"><strong>{{ count.value }}</strong></td>
-                                        <td><input class="form-control ScaleA-input-{{ count.value }}" type="text" disabled style="width: 240px" value="{{ weight.part_name }}"></td>
-                                        <td><input class="form-control ScaleA-input-{{ count.value }}" type="text" disabled style="width: 240px" value="{{ weight.part_number }}"></td>
-                                        <td><input class="form-control ScaleA-input-{{ count.value }}" type="text" disabled style="width: 60px" step="0.01" value="{{ weight.weight }}" ></td>
-                                        <td><input class="form-control ScaleA-input-{{ count.value }}" type="text" disabled style="width: 60px" step="0.01" value="{{ weight.ll }}" ></td>
-                                        <td><input class="form-control ScaleA-input-{{ count.value }}" type="text" disabled style="width: 60px" step="0.01" value="{{ weight.hl }}" ></td>
+                                        <td><input class="form-control ScaleA-input-{{ count.value }}" type="text" disabled autocomplete="off" style="width: 240px" value="{{ weight.part_name }}"></td>
+                                        <td><input class="form-control ScaleA-input-{{ count.value }}" type="text" disabled autocomplete="off" style="width: 240px" value="{{ weight.part_number }}"></td>
+                                        <td><input class="form-control ScaleA-input-{{ count.value }}" type="text" disabled autocomplete="off" style="width: 60px" step="0.01" value="{{ weight.weight }}" ></td>
+                                        <td><input class="form-control ScaleA-input-{{ count.value }}" type="text" disabled autocomplete="off" style="width: 60px" step="0.01" value="{{ weight.ll }}" ></td>
+                                        <td><input class="form-control ScaleA-input-{{ count.value }}" type="text" disabled autocomplete="off" style="width: 60px" step="0.01" value="{{ weight.hl }}" ></td>
                                     </tr>
                                     
                                     {% set count.value = count.value + 1 %}
@@ -82,11 +82,11 @@
                             <tr class="WeightRowScaleA" id="">
                                 <td><input class="" type="checkbox" disabled autocomplete="off" value="" id="toggle_row"></td>                        
                                 <td><strong>{{ count.value  }}</strong></td>
-                                <td><input class="form-control" type="text" style="width: 240px" placeholder=""></td>
-                                <td><input class="form-control" type="text" style="width: 240px" placeholder=""></td>
-                                <td><input class="form-control" type="text" style="width: 60px" step="0.01" placeholder="" ></td>
-                                <td><input class="form-control" type="text" style="width: 60px" step="0.01" placeholder="" ></td>
-                                <td><input class="form-control" type="text" style="width: 60px" step="0.01" placeholder="" ></td>
+                                <td><input class="form-control" autocomplete="off" type="text" style="width: 240px" placeholder=""></td>
+                                <td><input class="form-control" autocomplete="off" type="text" style="width: 240px" placeholder=""></td>
+                                <td><input class="form-control" autocomplete="off" type="text" style="width: 60px" step="0.01" placeholder="" ></td>
+                                <td><input class="form-control" autocomplete="off" type="text" style="width: 60px" step="0.01" placeholder="" ></td>
+                                <td><input class="form-control" autocomplete="off" type="text" style="width: 60px" step="0.01" placeholder="" ></td>
                             </tr>
                         </tbody>
                     </table>
@@ -111,7 +111,7 @@
                         <div class="col-md-6">   
                             <select id="selectActiveWeightScaleB" class="form-control">
                                 {% for weight in weights %}
-                                    {% if weight.scale == 'ScaleA'%}
+                                    {% if weight.scale == 'ScaleB'%}
                                         <option value="{{weight.part_name}}">{{weight.part_name}}</option>
                                     {% endif %}
                                 {% endfor %}
@@ -147,11 +147,11 @@
                                     <tr class="WeightRowScaleB" id="{{'ScaleB_'+weight.part_name|replace(' ','_')}}">
                                         <td class="align-middle"><input class="enable-tbl-inputs checkbox-ScaleB" autocomplete="off" type="checkbox" value="" id="ScaleB-{{ count.value }}"></td>
                                         <td class="align-middle"><strong>{{ count.value }}</strong></td>
-                                        <td><input class="form-control ScaleB-input-{{ count.value }}" disabled type="text" style="width: 240px" value="{{ weight.part_name }}"></td>
-                                        <td><input class="form-control ScaleB-input-{{ count.value }}" disabled type="text" style="width: 240px" value="{{ weight.part_number }}"></td>
-                                        <td><input class="form-control ScaleB-input-{{ count.value }}" disabled type="text" style="width: 60px" step="0.01" value="{{ weight.weight }}" ></td>
-                                        <td><input class="form-control ScaleB-input-{{ count.value }}" disabled type="text" style="width: 60px" step="0.01" value="{{ weight.ll }}" ></td>
-                                        <td><input class="form-control ScaleB-input-{{ count.value }}" disabled type="text" style="width: 60px" step="0.01" value="{{ weight.hl }}" ></td>
+                                        <td><input class="form-control ScaleB-input-{{ count.value }}" disabled autocomplete="off" type="text" style="width: 240px" value="{{ weight.part_name }}"></td>
+                                        <td><input class="form-control ScaleB-input-{{ count.value }}" disabled autocomplete="off" type="text" style="width: 240px" value="{{ weight.part_number }}"></td>
+                                        <td><input class="form-control ScaleB-input-{{ count.value }}" disabled autocomplete="off" type="text" style="width: 60px" step="0.01" value="{{ weight.weight }}" ></td>
+                                        <td><input class="form-control ScaleB-input-{{ count.value }}" disabled autocomplete="off" type="text" style="width: 60px" step="0.01" value="{{ weight.ll }}" ></td>
+                                        <td><input class="form-control ScaleB-input-{{ count.value }}" disabled autocomplete="off" type="text" style="width: 60px" step="0.01" value="{{ weight.hl }}" ></td>
                                     </tr>
                                     
                                     {% set count.value = count.value + 1 %}
@@ -160,11 +160,11 @@
                             <tr class="WeightRowScaleB" id="">
                                 <td class="align-middle"><input class="" autocomplete="off" type="checkbox" disabled value="" id="toggle_row"></td>                         
                                 <td><strong>{{ count.value }}</strong></td>
-                                <td><input class="form-control" type="text" style="width: 240px" placeholder=""></td>
-                                <td><input class="form-control" type="text" style="width: 240px" placeholder=""></td>
-                                <td><input class="form-control" type="text" style="width: 60px" step="0.01" placeholder="" ></td>
-                                <td><input class="form-control" type="text" style="width: 60px" step="0.01" placeholder="" ></td>
-                                <td><input class="form-control" type="text" style="width: 60px" step="0.01" placeholder="" ></td>
+                                <td><input class="form-control" autocomplete="off" type="text" style="width: 240px" placeholder=""></td>
+                                <td><input class="form-control" autocomplete="off" type="text" style="width: 240px" placeholder=""></td>
+                                <td><input class="form-control" autocomplete="off" type="text" style="width: 60px" step="0.01" placeholder="" ></td>
+                                <td><input class="form-control" autocomplete="off" type="text" style="width: 60px" step="0.01" placeholder="" ></td>
+                                <td><input class="form-control" autocomplete="off" type="text" style="width: 60px" step="0.01" placeholder="" ></td>
                             </tr>
                         </tbody>
                     </table>

@@ -11,9 +11,11 @@
                 
                 {% for scale in scale_params.scale %}
                     {% set index = loop.index - 1 %}
-                    <li class="nav-item">
-                        <a class="nav-link {% if index == 0 %} active {% endif %}" data-toggle="tab" href="#tabs-{{ index }}" role="tab">{{ scale.name }}</a>
-                    </li>
+                    {% if scale.active == 1%}
+                        <li class="nav-item">
+                            <a class="nav-link {% if index == 0 %} active {% endif %}" data-toggle="tab" href="#tabs-{{ index }}" role="tab">{{ scale.name }}</a>
+                        </li>
+                    {% endif %}
                 {% endfor %}
                
                 <li class="nav-item">
