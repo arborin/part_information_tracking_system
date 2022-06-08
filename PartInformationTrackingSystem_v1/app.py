@@ -7,6 +7,7 @@ import communicate
 import serial
 from flask import json
 from flask import Flask
+from flask import flash
 from flask import render_template
 from flask.config import Config
 from pymongo import MongoClient
@@ -161,15 +162,23 @@ def set_db_params():
 
 @app.route('/settings/camera', methods=["GET", "POST"])
 def set_camera_params():
-    get_camera_params = flask.request.form.camera
-    camera_id = flask.request.form['id']
-
-    print(get_camera_params)
-    print("************************************")
-    print(app.camera_params['camera'])
-    print("************************************")
-    #app.write_settings('camera')
     
+    get_camera_params = flask.request.form.to_dict()
+    
+    camera_id = int(get_camera_params['camera_id'])
+    
+    print(app.camera_params, file=sys.stderr)
+    print("====================================", file=sys.stderr)
+    
+    print(get_camera_params, file=sys.stderr)
+    print("====================================", file=sys.stderr)
+    
+    app.camera_params['camera'][camera_id] = get_camera_params
+    
+    print(app.camera_params, file=sys.stderr)
+    print("====================================", file=sys.stderr)
+    
+    #app.write_settings('camera')
     return app.make_response('OK')
 
 @app.route('/settings/camera/checkconnection', methods=["GET", "POST"])
@@ -194,9 +203,13 @@ def set_scale_parames():
     app.logger.info(app.scale_params)
     args = dict(args)
     scale_id = int(args['scale_id'][0])
-
-    app.scale_params['scale'][scale_id]['scale_ip'] = args['scale_ip'][0]
-    app.scale_params['scale'][scale_id]['scale_port'] = args['scale_port'][0]
+    
+    app.logger.info("SCALE SETTINGS")
+    app.logger.info(args)
+    app.logger.info("==============")
+    
+    app.scale_params['scale'][scale_id]['scale_ip'] = args['scale_ip']
+    app.scale_params['scale'][scale_id]['scale_port'] = args['scale_port']
     
     app.logger.info(app.scale_params)
     app.write_settings('scale')

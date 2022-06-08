@@ -1,6 +1,7 @@
 {
     "camera": [
         { 
+            "camera_id": 0,
             "baud_rate": "110", 
             "byte_size": "5", 
             "com_port": "COM1", 
@@ -9,6 +10,7 @@
             "stop_bits": "1"
         },
         { 
+            "camera_id": 1,
             "baud_rate": "1200", 
             "byte_size": "45", 
             "com_port": "COM3", 

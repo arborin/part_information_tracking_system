@@ -11,7 +11,19 @@ $("[id^='saveScaleSettings-']").click(function(){
     
     console.log(data);
 
-    $.post('/settings/scale', data )
+    $.post('/settings/scale', data ).done(function( data ) {
+        if(data == 'OK'){
+            
+            $(".connection-settings").prop("checked", false);
+            $("#scaleIpInput-"+id).prop("disabled", true);
+            $("#scalePortInput-"+id).prop("disabled", true);
+            
+            alertify.success("Success!")
+        }else{
+            alertify.error("Failed...")
+        }
+    });
+    
 });
 
 $("#saveDBSettings").click(function(){
@@ -54,8 +66,8 @@ $("#checkDBConnection").click(function(){
         "db_password": $("#databasePasswordInput").val()
     };
     $.post('/settings/db/checkconnection', data, function(data, status, xhr){
-        alert(xhr.responseText); 
-
+        // alert(xhr.responseText); 
+        alertify.success("Success")
     });
 });
 
@@ -69,15 +81,13 @@ function saveCameraSettings(){
     
 
     var data = {
-        'camera': [
-            {'com_port': $('#ComPortInput-'+id).val()},
-            {'baud_rate': $('#BaudRateInput-'+id).val()},
-            {'byte_size': $('#BiteSizeInput-'+id).val()},
-            {'stop_bits': $('#StopBitsInput-'+id).val()},
-            {'parity': $('#ParityInput-'+id).val()},
-            {'flow_control': $('#FlowControlInput-'+id).val()}
-        ],
-        'id': id,
+        'com_port': $('#ComPortInput-' + id).val(), 
+        'baud_rate': $('#BaudRateInput-' + id).val(), 
+        'byte_size': $('#BiteSizeInput-' + id).val(), 
+        'stop_bits': $('#StopBitsInput-' + id).val(), 
+        'parity': $('#ParityInput-' + id).val(), 
+        'flow_control': $('#FlowControlInput-' + id).val(),
+        'camera_id': id,
     };
     
     console.log(data);
@@ -86,7 +96,13 @@ function saveCameraSettings(){
 
 
 function saveCameraSettingsCallback(data, status, xhr){
-    alert('Settings Saved')
+    let res = xhr.responseText
+    if(res == 'OK'){
+        alertify.success('Settings Saved')
+    }else{
+        alertify.error("Settings")
+    }
+   
 };
 
 
