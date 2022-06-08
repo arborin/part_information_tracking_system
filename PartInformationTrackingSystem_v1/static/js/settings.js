@@ -61,17 +61,26 @@ $("#checkDBConnection").click(function(){
 
 
 
-$('#saveCameraSettings').click(saveCameraSettings);
+$('.saveCameraSettings').click(saveCameraSettings);
 
 function saveCameraSettings(){
+    
+    let id = this.id.split('-')[1];
+    
+
     var data = {
-        'com_port':$('#ComPortInput').val(),
-        'baud_rate':$('#BaudRateInput').val(),
-        'byte_size':$('#BiteSizeInput').val(),
-        'stop_bits':$('#StopBitsInput').val(),
-        'parity':$('#ParityInput').val(),
-        'flow_control':$('#FlowControlInput').val()
+        'camera': [
+            {'com_port': $('#ComPortInput-'+id).val()},
+            {'baud_rate': $('#BaudRateInput-'+id).val()},
+            {'byte_size': $('#BiteSizeInput-'+id).val()},
+            {'stop_bits': $('#StopBitsInput-'+id).val()},
+            {'parity': $('#ParityInput-'+id).val()},
+            {'flow_control': $('#FlowControlInput-'+id).val()}
+        ],
+        'id': id,
     };
+    
+    console.log(data);
     $.post('/settings/camera',data, saveCameraSettingsCallback);
 }
 

@@ -161,8 +161,15 @@ def set_db_params():
 
 @app.route('/settings/camera', methods=["GET", "POST"])
 def set_camera_params():
-    app.camera_params = flask.request.form
-    app.write_settings('camera')
+    get_camera_params = flask.request.form.camera
+    camera_id = flask.request.form['id']
+
+    print(get_camera_params)
+    print("************************************")
+    print(app.camera_params['camera'])
+    print("************************************")
+    #app.write_settings('camera')
+    
     return app.make_response('OK')
 
 @app.route('/settings/camera/checkconnection', methods=["GET", "POST"])

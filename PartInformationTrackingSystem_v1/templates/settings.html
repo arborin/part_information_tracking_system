@@ -65,7 +65,7 @@
                                     <div class="form-row">
                                         <div class='form-group col-md-12'>
                                             <div class="form-check">
-                                                <input class="form-check-input mt-2" type="checkbox" autocomplete="off" value="" id="flexCheckDefault">
+                                                <input class="form-check-input mt-2 enable-cammera-settings" type="checkbox" autocomplete="off" value="" id="flexCheckDefault">
                                                 <label class="form-check-label" for="flexCheckDefault">
                                                     <h6 class="text-primary"><strong> Camera Connection Settings  </strong></h6>
                                                 </label>
@@ -133,8 +133,8 @@
                                             </select>
                                         </div>
                                         <div class='col-sm-12'>
-                                            <button type='button' class='btn btn-secondary' disabled id='checkCameraConnection'>Check Connection</button>
-                                            <button type='button' class='btn btn-primary' disabled id="saveCameraSettings">Save Settings</button>
+                                            <button type='button' class='btn btn-secondary checkCameraConnection'  id='checkCameraConnection-{{ index }}'>Check Connection</button>
+                                            <button type='button' class='btn btn-primary saveCameraSettings'  id="saveCameraSettings-{{ index }}">Save Settings</button>
                                         </div>
                                     </div> 
                                 </form>
