@@ -1,8 +1,6 @@
 import flask
 import socket
 import sys
-
-from sqlalchemy import true
 import communicate
 import serial
 from flask import json
@@ -313,4 +311,4 @@ def get_weight():
 
 
 if __name__ == '__main__':
-    socketio.run(app, debug=true)
+    socketio.run(app, debug=True)
