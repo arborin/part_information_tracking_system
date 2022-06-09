@@ -39,7 +39,7 @@
                                         <div class='form-group col-md-12 mt-5'>
                                             <div class="form-check">
                                                 <input class="form-check-input mt-1 connection-settings" type="checkbox" autocomplete="off" value="" id="flexCheckDefault-{{ index }}">
-                                                <label class="form-check-label" for="flexCheckDefault">
+                                                <label class="form-check-label" for="">
                                                     <h6 class="text-primary"><strong> Scale Connection Settings</strong></h6>
                                                 </label>
                                             </div>
@@ -65,15 +65,15 @@
                                     <div class="form-row">
                                         <div class='form-group col-md-12'>
                                             <div class="form-check">
-                                                <input class="form-check-input mt-2 enable-cammera-settings" type="checkbox" autocomplete="off" value="" id="flexCheckDefault">
-                                                <label class="form-check-label" for="flexCheckDefault">
+                                                <input class="form-check-input mt-2 enable-camera-settings" type="checkbox" autocomplete="off" value="" id="cameraSetting-{{ index }}">
+                                                <label class="form-check-label" for="">
                                                     <h6 class="text-primary"><strong> Camera Connection Settings  </strong></h6>
                                                 </label>
                                             </div>
                                         </div>
                                         <div class='form-group col-md-6'>
                                             <label for='ComPortInput'>COM Port:</label>
-                                            <select type='select' disabled value='COM3' class='form-control' id='ComPortInput-{{ index }}' autocomplete='off'>
+                                            <select type='select' value='COM3' disabled class='form-control' id='ComPortInput-{{ index }}' autocomplete='off'>
                                                 <option value='COM1' {% if camera_params.camera[index].com_port == "COM1" %}selected{% endif %}>COM1</option>
                                                 <option value='COM2' {% if camera_params.camera[index].com_port == "COM2" %}selected{% endif %}>COM2</option>
                                                 <option value='COM3' {% if camera_params.camera[index].com_port == "COM3" %}selected{% endif %}>COM3</option>
@@ -81,7 +81,7 @@
                                         </div>
                                         <div class='form-group col-md-6'>
                                             <label for="BaudRateInput">Baud Rate:</label>
-                                            <select type='select' disabled class='form-control' id="BaudRateInput-{{ index }}" autocomplete='off'>
+                                            <select type='select' class='form-control' disabled id="BaudRateInput-{{ index }}" autocomplete='off'>
                                                 <option value="110"     {% if camera_params.camera[index].baud_rate == "110" %}     selected{% endif %}>110</option>
                                                 <option value="300"     {% if camera_params.camera[index].baud_rate == "300" %}     selected{% endif %}>300</option>
                                                 <option value="600"     {% if camera_params.camera[index].baud_rate == "600" %}     selected{% endif %}>600</option>
@@ -100,7 +100,7 @@
                                         </div>
                                         <div class='form-group col-md-6'>
                                             <label for="BiteSizeInput">Data Bits:</label>
-                                            <select type='select' disabled class='form-control' id="BiteSizeInput-{{ index }}" autocomplete='off'>
+                                            <select type='select' class='form-control' disabled id="BiteSizeInput-{{ index }}" autocomplete='off'>
                                                 <option value="5" {% if camera_params.camera[index].byte_size == "5" %}selected{% endif %}>5</option>
                                                 <option value="6" {% if camera_params.camera[index].byte_size == "6" %}selected{% endif %}>6</option>
                                                 <option value="7" {% if camera_params.camera[index].byte_size == "7" %}selected{% endif %}>7</option>
@@ -109,7 +109,7 @@
                                         </div>
                                         <div class='form-group col-md-6'>
                                             <label for="ParityInput">Parity:</label>
-                                            <select type='select' disabled class='form-control' id="ParityInput-{{ index }}" autocomplete='off'>
+                                            <select type='select' class='form-control' disabled id="ParityInput-{{ index }}" autocomplete='off'>
                                                 <option value="None"    {% if camera_params.camera[index].parity == "None" %}selected{% endif %}>None</option>
                                                 <option value="Even"    {% if camera_params.camera[index].parity == "Even" %}selected{% endif %}>Odd</option>
                                                 <option value="Mark"    {% if camera_params.camera[index].parity == "Mark" %}selected{% endif %}>Mark</option>
@@ -118,7 +118,7 @@
                                         </div>
                                         <div class='form-group col-md-6'>
                                             <label for="StopBitsInput">Stop Bits:</label>
-                                            <select type='select' disabled class='form-control' id="StopBitsInput-{{ index }}" autocomplete='off'>
+                                            <select type='select' class='form-control' disabled id="StopBitsInput-{{ index }}" autocomplete='off'>
                                                 <option value="1"   {% if camera_params.camera[index].stop_bits == "1"    %} selected {% endif %}>1   </option>
                                                 <option value="1.5" {% if camera_params.camera[index].stop_bits == "1.5"  %} selected {% endif %}>1.5 </option>
                                                 <option value="2"   {% if camera_params.camera[index].stop_bits == "2"    %} selected {% endif %}>2   </option>
@@ -126,7 +126,7 @@
                                         </div>
                                         <div class='form-group col-md-6'>
                                             <label for="FlowControlInput">Flow Control:</label>
-                                            <select type='select' disabled class='form-control' id="FlowControlInput-{{ index }}" autocomplete='off'>
+                                            <select type='select' class='form-control' disabled id="FlowControlInput-{{ index }}" autocomplete='off'>
                                                 <option value="DSR/DTR"     {% if camera_params.camera[index].flow_control == "DSR/DTR"  %}selected{% endif %}>DSR/DTR</option>
                                                 <option value="RTS/CTS"     {% if camera_params.camera[index].flow_control == "RTS/CTS"  %}selected{% endif %}>RTS/CTS</option>
                                                 <option value="XON/XOFF"    {% if camera_params.camera[index].flow_control == "XON/XOFF" %}selected{% endif %}>XON/XOFF</option>
@@ -134,7 +134,7 @@
                                         </div>
                                         <div class='col-sm-12'>
                                             <button type='button' class='btn btn-secondary checkCameraConnection'  id='checkCameraConnection-{{ index }}'>Check Connection</button>
-                                            <button type='button' class='btn btn-primary saveCameraSettings'  id="saveCameraSettings-{{ index }}">Save Settings</button>
+                                            <button type='button' class='btn btn-primary saveCameraSettings' disabled id="saveCameraSettings-{{ index }}">Save Settings</button>
                                         </div>
                                     </div> 
                                 </form>
