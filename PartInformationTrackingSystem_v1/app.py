@@ -161,22 +161,23 @@ def set_db_params():
 @app.route('/settings/camera', methods=["GET", "POST"])
 def set_camera_params():
     
-    get_camera_params = flask.request.form.to_dict()
+    # get_camera_params = flask.request.form.to_dict()
     
-    camera_id = int(get_camera_params['camera_id'])
+    # camera_id = int(get_camera_params['camera_id'])
     
-    print(app.camera_params, file=sys.stderr)
-    print("====================================", file=sys.stderr)
+    # print(app.camera_params, file=sys.stderr)
+    # print("====================================", file=sys.stderr)
     
-    print(get_camera_params, file=sys.stderr)
-    print("====================================", file=sys.stderr)
+    # print(get_camera_params, file=sys.stderr)
+    # print("====================================", file=sys.stderr)
     
-    app.camera_params['camera'][camera_id] = get_camera_params
+    # app.camera_params['camera'][camera_id] = get_camera_params
     
-    print(app.camera_params, file=sys.stderr)
-    print("====================================", file=sys.stderr)
+    # print(app.camera_params, file=sys.stderr)
+    # print("====================================", file=sys.stderr)
     
-    #app.write_settings('camera')
+    app.camera_params = flask.request.form
+    app.write_settings('camera')
     return app.make_response('OK')
 
 @app.route('/settings/camera/checkconnection', methods=["GET", "POST"])

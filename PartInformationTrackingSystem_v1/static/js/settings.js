@@ -77,54 +77,60 @@ $('.saveCameraSettings').click(saveCameraSettings);
 
 function saveCameraSettings(){
     
-    let id = this.id.split('-')[1];
-    
-
     var data = {
-        'com_port': $('#ComPortInput-' + id).val(), 
-        'baud_rate': $('#BaudRateInput-' + id).val(), 
-        'byte_size': $('#BiteSizeInput-' + id).val(), 
-        'stop_bits': $('#StopBitsInput-' + id).val(), 
-        'parity': $('#ParityInput-' + id).val(), 
-        'flow_control': $('#FlowControlInput-' + id).val(),
-        'camera_id': id,
+        'com_port': $('#ComPortInput').val(), 
+        'baud_rate': $('#BaudRateInput').val(), 
+        'byte_size': $('#BiteSizeInput').val(), 
+        'stop_bits': $('#StopBitsInput').val(), 
+        'parity': $('#ParityInput').val(), 
+        'flow_control': $('#FlowControlInput').val(),
     };
     
     // POST ALL DATA
     $.post('/settings/camera',data, saveCameraSettingsCallback);
     
     // DISABLE ALL INPUTS
-    $("#ComPortInput-"+id).prop("disabled", true);
-    $("#BaudRateInput-"+id).prop("disabled", true);
-    $("#BiteSizeInput-"+id).prop("disabled", true);
-    $("#ParityInput-"+id).prop("disabled", true);
-    $("#StopBitsInput-"+id).prop("disabled", true);
-    $("#StopBitsInput-"+id).prop("disabled", true);
-    $("#FlowControlInput-"+id).prop("disabled", true);
+    $('#ComPortInput').prop('disabled', true);
+    $('#BaudRateInput').prop('disabled', true);
+    $('#BiteSizeInput').prop('disabled', true);
+    $('#ParityInput').prop('disabled', true);
+    $('#StopBitsInput').prop('disabled', true);
+    $('#StopBitsInput').prop('disabled', true);
+    $('#FlowControlInput').prop('disabled', true);
     
-    $("#saveCameraSettings-"+id).prop("disabled", true);
+    $('#saveCameraSettings').prop('disabled', true);
 }
 
 
 function saveCameraSettingsCallback(data, status, xhr){
     let res = xhr.responseText
+    console.log(res)
+    
     if(res == 'OK'){ 
+        $('#cameraSetting').click(); 
         alertify.success('Settings Saved')
     }else{
-        alertify.error("Settings")
+        alertify.error("ERROR")
     }
    
 };
 
 
 $('#checkCameraConnection').click(function(){
-    saveCameraSettings();
+    // saveCameraSettings();
     $.post('/settings/camera/checkconnection', null, checkCameraConnectionCallback);
 })
 
 
 function checkCameraConnectionCallback(data, status, xhr){
-    alert(xhr.responseText);
+    let res = xhr.responseText
+    console.log(res)
+    
+    if(res == 'OK'){ 
+        alertify.success('Connected!')
+    }else{
+        alertify.error("Connection error!")
+    }
 }
 
 
@@ -170,31 +176,34 @@ $(document).ready(function () {
         /*
             CAMERA SETTINGS CHECKBOX
         */
-        let id = this.id.split('-')[1]; // id - ScaleA or ScaleB
-        
-        // alert(id);
     
         if(this.checked) {
-            $("#ComPortInput-"+id).prop("disabled", false);
-            $("#BaudRateInput-"+id).prop("disabled", false);
-            $("#BiteSizeInput-"+id).prop("disabled", false);
-            $("#ParityInput-"+id).prop("disabled", false);
-            $("#StopBitsInput-"+id).prop("disabled", false);
-            $("#StopBitsInput-"+id).prop("disabled", false);
-            $("#FlowControlInput-"+id).prop("disabled", false);
+            $('#ComPortInput').prop('disabled', false);
+            $('#BaudRateInput').prop('disabled', false);
+            $('#BiteSizeInput').prop('disabled', false);
+            $('#ParityInput').prop('disabled', false);
+            $('#StopBitsInput').prop('disabled', false);
+            $('#StopBitsInput').prop('disabled', false);
+            $('#FlowControlInput').prop('disabled', false);
             
-            // ENABLE BUTTON
-            $("#saveCameraSettings-"+id).prop("disabled", false);
+            // ENABLE SAVE BUTTON
+            $('#saveCameraSettings').prop('disabled', false);
+            // DISABLE TEST CONNECTION BTN
+            $('#checkCameraConnection').prop('disabled', true);
+            
         }else{
-            $("#ComPortInput-"+id).prop("disabled", true);
-            $("#BaudRateInput-"+id).prop("disabled", true);
-            $("#BiteSizeInput-"+id).prop("disabled", true);
-            $("#ParityInput-"+id).prop("disabled", true);
-            $("#StopBitsInput-"+id).prop("disabled", true);
-            $("#StopBitsInput-"+id).prop("disabled", true);
-            $("#FlowControlInput-"+id).prop("disabled", true);
+            $('#ComPortInput').prop('disabled', true);
+            $('#BaudRateInput').prop('disabled', true);
+            $('#BiteSizeInput').prop('disabled', true);
+            $('#ParityInput').prop('disabled', true);
+            $('#StopBitsInput').prop('disabled', true);
+            $('#StopBitsInput').prop('disabled', true);
+            $('#FlowControlInput').prop('disabled', true);
             
-            $("#saveCameraSettings-"+id).prop("disabled", true);
+            // DISABLE CAMMERA SAVE BTN
+            $('#saveCameraSettings').prop('disabled', true);
+            // ENABLE TEST CONNECTION BTN
+            $('#checkCameraConnection').prop('disabled', false);
         }
     });
     
