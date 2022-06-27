@@ -8,12 +8,14 @@
         <div class="col-md-12">
             <!-- {{ scale_params }} -->
             <ul class="nav nav-tabs" role="tablist">
-                
+                <li class="nav-item">
+                    <a class="nav-link active" data-toggle="tab" href="#camera_tab" role="tab">Camera Settings</a>
+                </li>
                 {% for scale in scale_params.scale %}
                     {% set index = loop.index - 1 %}
                     {% if scale.active == 1%}
                         <li class="nav-item">
-                            <a class="nav-link {% if index == 0 %} active {% endif %}" data-toggle="tab" href="#tabs-{{ index }}" role="tab">{{ scale.name }}</a>
+                            <a class="nav-link" data-toggle="tab" href="#tabs-{{ index }}" role="tab">{{ scale.name }}</a>
                         </li>
                     {% endif %}
                 {% endfor %}
@@ -25,12 +27,95 @@
             <div class="row">
                 <div class="col-md-6">
                     <div class="tab-content">
+                        
+                        <!-- CAMERA CONNECTION SETTINGS TAB -->
+                        <div class="tab-pane active" id="camera_tab" role="tabpanel">
+                            <form>
+                                <div class="form-row ">
+                                    <div class='form-group col-md-12 mt-5'>
+                                        <div class="form-check">
+                                            <input class="form-check-input mt-1 enable-camera-settings" type="checkbox" autocomplete="off" value="" id="cameraSetting-0">
+                                            <label class="form-check-label" for="">
+                                                <h6 class="text-primary"><strong> Camera Connection Settings  </strong></h6>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class='form-group col-md-6'>
+                                        <label for='ComPortInput'>COM Port:</label>
+                                        <select type='select' value='COM3' disabled class='form-control' id='ComPortInput-0' autocomplete='off'>
+                                            <option value='COM1' {% if camera_params.camera[0].com_port == "COM1" %}selected{% endif %}>COM1</option>
+                                            <option value='COM2' {% if camera_params.camera[0].com_port == "COM2" %}selected{% endif %}>COM2</option>
+                                            <option value='COM3' {% if camera_params.camera[0].com_port == "COM3" %}selected{% endif %}>COM3</option>
+                                        </select>
+                                    </div>
+                                    <div class='form-group col-md-6'>
+                                        <label for="BaudRateInput">Baud Rate:</label>
+                                        <select type='select' class='form-control' disabled id="BaudRateInput-0" autocomplete='off'>
+                                            <option value="110"     {% if camera_params.camera[0].baud_rate == "110" %}     selected{% endif %}>110</option>
+                                            <option value="300"     {% if camera_params.camera[0].baud_rate == "300" %}     selected{% endif %}>300</option>
+                                            <option value="600"     {% if camera_params.camera[0].baud_rate == "600" %}     selected{% endif %}>600</option>
+                                            <option value="1200"    {% if camera_params.camera[0].baud_rate == "1200" %}    selected{% endif %}>1200</option>
+                                            <option value="2400"    {% if camera_params.camera[0].baud_rate == "2400" %}    selected{% endif %}>2400</option>
+                                            <option value="4800"    {% if camera_params.camera[0].baud_rate == "4800" %}    selected{% endif %}>4800</option>
+                                            <option value="9600"    {% if camera_params.camera[0].baud_rate == "9600" %}    selected{% endif %}>9600</option>
+                                            <option value="14400"   {% if camera_params.camera[0].baud_rate == "14400" %}   selected{% endif %}>14400</option>
+                                            <option value="19200"   {% if camera_params.camera[0].baud_rate == "19200" %}   selected{% endif %}>19200</option>
+                                            <option value="38400"   {% if camera_params.camera[0].baud_rate == "38400" %}   selected{% endif %}>38400</option>
+                                            <option value="57600"   {% if camera_params.camera[0].baud_rate == "57600" %}   selected{% endif %}>57600</option>
+                                            <option value="115200"  {% if camera_params.camera[0].baud_rate == "115200" %}  selected{% endif %}>115200</option>
+                                            <option value="128000"  {% if camera_params.camera[0].baud_rate == "128000" %}  selected{% endif %}>128000</option>
+                                            <option value="256000"  {% if camera_params.camera[0].baud_rate == "256000" %}  selected{% endif %}>256000</option>
+                                        </select>
+                                    </div>
+                                    <div class='form-group col-md-6'>
+                                        <label for="BiteSizeInput">Data Bits:</label>
+                                        <select type='select' class='form-control' disabled id="BiteSizeInput-0" autocomplete='off'>
+                                            <option value="5" {% if camera_params.camera[0].byte_size == "5" %}selected{% endif %}>5</option>
+                                            <option value="6" {% if camera_params.camera[0].byte_size == "6" %}selected{% endif %}>6</option>
+                                            <option value="7" {% if camera_params.camera[0].byte_size == "7" %}selected{% endif %}>7</option>
+                                            <option value="8" {% if camera_params.camera[0].byte_size == "8" %}selected{% endif %}>8</option>
+                                        </select>
+                                    </div>
+                                    <div class='form-group col-md-6'>
+                                        <label for="ParityInput">Parity:</label>
+                                        <select type='select' class='form-control' disabled id="ParityInput-0" autocomplete='off'>
+                                            <option value="None"    {% if camera_params.camera[0].parity == "None" %}selected{% endif %}>None</option>
+                                            <option value="Even"    {% if camera_params.camera[0].parity == "Even" %}selected{% endif %}>Odd</option>
+                                            <option value="Mark"    {% if camera_params.camera[0].parity == "Mark" %}selected{% endif %}>Mark</option>
+                                            <option value="Space"   {% if camera_params.camera[0].parity == "Space" %}selected{% endif %}>Space</option>
+                                        </select>
+                                    </div>
+                                    <div class='form-group col-md-6'>
+                                        <label for="StopBitsInput">Stop Bits:</label>
+                                        <select type='select' class='form-control' disabled id="StopBitsInput-0" autocomplete='off'>
+                                            <option value="1"   {% if camera_params.camera[0].stop_bits == "1"    %} selected {% endif %}>1   </option>
+                                            <option value="1.5" {% if camera_params.camera[0].stop_bits == "1.5"  %} selected {% endif %}>1.5 </option>
+                                            <option value="2"   {% if camera_params.camera[0].stop_bits == "2"    %} selected {% endif %}>2   </option>
+                                        </select>
+                                    </div>
+                                    <div class='form-group col-md-6'>
+                                        <label for="FlowControlInput">Flow Control:</label>
+                                        <select type='select' class='form-control' disabled id="FlowControlInput-0" autocomplete='off'>
+                                            <option value="DSR/DTR"     {% if camera_params.camera[0].flow_control == "DSR/DTR"  %}selected{% endif %}>DSR/DTR</option>
+                                            <option value="RTS/CTS"     {% if camera_params.camera[0].flow_control == "RTS/CTS"  %}selected{% endif %}>RTS/CTS</option>
+                                            <option value="XON/XOFF"    {% if camera_params.camera[0].flow_control == "XON/XOFF" %}selected{% endif %}>XON/XOFF</option>
+                                        </select>
+                                    </div>
+                                    <div class='col-sm-12'>
+                                        <button type='button' class='btn btn-secondary checkCameraConnection'  id='checkCameraConnection-0'>Check Connection</button>
+                                        <button type='button' class='btn btn-primary saveCameraSettings' disabled id="saveCameraSettings-0">Save Settings</button>
+                                    </div>
+                                </div> 
+                            </form>
+                        </div>
+                        
+                        
                         {% for scale in scale_params.scale %}
                             <!-- save index -->
                             {% set index = loop.index - 1 %} 
                             
                             
-                            <div class="tab-pane {% if index == 0 %} active {% endif %}" id="tabs-{{ index }}" role="tabpanel">
+                            <div class="tab-pane" id="tabs-{{ index }}" role="tabpanel">
                                 <!-- <hr>
                                     {{ index }}
                                 <hr> -->
@@ -61,85 +146,12 @@
                                 
                                 <hr class="mt-5 mb-5">
                                 
-                                <form>
-                                    <div class="form-row">
-                                        <div class='form-group col-md-12'>
-                                            <div class="form-check">
-                                                <input class="form-check-input mt-2 enable-camera-settings" type="checkbox" autocomplete="off" value="" id="cameraSetting-{{ index }}">
-                                                <label class="form-check-label" for="">
-                                                    <h6 class="text-primary"><strong> Camera Connection Settings  </strong></h6>
-                                                </label>
-                                            </div>
-                                        </div>
-                                        <div class='form-group col-md-6'>
-                                            <label for='ComPortInput'>COM Port:</label>
-                                            <select type='select' value='COM3' disabled class='form-control' id='ComPortInput-{{ index }}' autocomplete='off'>
-                                                <option value='COM1' {% if camera_params.camera[index].com_port == "COM1" %}selected{% endif %}>COM1</option>
-                                                <option value='COM2' {% if camera_params.camera[index].com_port == "COM2" %}selected{% endif %}>COM2</option>
-                                                <option value='COM3' {% if camera_params.camera[index].com_port == "COM3" %}selected{% endif %}>COM3</option>
-                                            </select>
-                                        </div>
-                                        <div class='form-group col-md-6'>
-                                            <label for="BaudRateInput">Baud Rate:</label>
-                                            <select type='select' class='form-control' disabled id="BaudRateInput-{{ index }}" autocomplete='off'>
-                                                <option value="110"     {% if camera_params.camera[index].baud_rate == "110" %}     selected{% endif %}>110</option>
-                                                <option value="300"     {% if camera_params.camera[index].baud_rate == "300" %}     selected{% endif %}>300</option>
-                                                <option value="600"     {% if camera_params.camera[index].baud_rate == "600" %}     selected{% endif %}>600</option>
-                                                <option value="1200"    {% if camera_params.camera[index].baud_rate == "1200" %}    selected{% endif %}>1200</option>
-                                                <option value="2400"    {% if camera_params.camera[index].baud_rate == "2400" %}    selected{% endif %}>2400</option>
-                                                <option value="4800"    {% if camera_params.camera[index].baud_rate == "4800" %}    selected{% endif %}>4800</option>
-                                                <option value="9600"    {% if camera_params.camera[index].baud_rate == "9600" %}    selected{% endif %}>9600</option>
-                                                <option value="14400"   {% if camera_params.camera[index].baud_rate == "14400" %}   selected{% endif %}>14400</option>
-                                                <option value="19200"   {% if camera_params.camera[index].baud_rate == "19200" %}   selected{% endif %}>19200</option>
-                                                <option value="38400"   {% if camera_params.camera[index].baud_rate == "38400" %}   selected{% endif %}>38400</option>
-                                                <option value="57600"   {% if camera_params.camera[index].baud_rate == "57600" %}   selected{% endif %}>57600</option>
-                                                <option value="115200"  {% if camera_params.camera[index].baud_rate == "115200" %}  selected{% endif %}>115200</option>
-                                                <option value="128000"  {% if camera_params.camera[index].baud_rate == "128000" %}  selected{% endif %}>128000</option>
-                                                <option value="256000"  {% if camera_params.camera[index].baud_rate == "256000" %}  selected{% endif %}>256000</option>
-                                            </select>
-                                        </div>
-                                        <div class='form-group col-md-6'>
-                                            <label for="BiteSizeInput">Data Bits:</label>
-                                            <select type='select' class='form-control' disabled id="BiteSizeInput-{{ index }}" autocomplete='off'>
-                                                <option value="5" {% if camera_params.camera[index].byte_size == "5" %}selected{% endif %}>5</option>
-                                                <option value="6" {% if camera_params.camera[index].byte_size == "6" %}selected{% endif %}>6</option>
-                                                <option value="7" {% if camera_params.camera[index].byte_size == "7" %}selected{% endif %}>7</option>
-                                                <option value="8" {% if camera_params.camera[index].byte_size == "8" %}selected{% endif %}>8</option>
-                                            </select>
-                                        </div>
-                                        <div class='form-group col-md-6'>
-                                            <label for="ParityInput">Parity:</label>
-                                            <select type='select' class='form-control' disabled id="ParityInput-{{ index }}" autocomplete='off'>
-                                                <option value="None"    {% if camera_params.camera[index].parity == "None" %}selected{% endif %}>None</option>
-                                                <option value="Even"    {% if camera_params.camera[index].parity == "Even" %}selected{% endif %}>Odd</option>
-                                                <option value="Mark"    {% if camera_params.camera[index].parity == "Mark" %}selected{% endif %}>Mark</option>
-                                                <option value="Space"   {% if camera_params.camera[index].parity == "Space" %}selected{% endif %}>Space</option>
-                                            </select>
-                                        </div>
-                                        <div class='form-group col-md-6'>
-                                            <label for="StopBitsInput">Stop Bits:</label>
-                                            <select type='select' class='form-control' disabled id="StopBitsInput-{{ index }}" autocomplete='off'>
-                                                <option value="1"   {% if camera_params.camera[index].stop_bits == "1"    %} selected {% endif %}>1   </option>
-                                                <option value="1.5" {% if camera_params.camera[index].stop_bits == "1.5"  %} selected {% endif %}>1.5 </option>
-                                                <option value="2"   {% if camera_params.camera[index].stop_bits == "2"    %} selected {% endif %}>2   </option>
-                                            </select>
-                                        </div>
-                                        <div class='form-group col-md-6'>
-                                            <label for="FlowControlInput">Flow Control:</label>
-                                            <select type='select' class='form-control' disabled id="FlowControlInput-{{ index }}" autocomplete='off'>
-                                                <option value="DSR/DTR"     {% if camera_params.camera[index].flow_control == "DSR/DTR"  %}selected{% endif %}>DSR/DTR</option>
-                                                <option value="RTS/CTS"     {% if camera_params.camera[index].flow_control == "RTS/CTS"  %}selected{% endif %}>RTS/CTS</option>
-                                                <option value="XON/XOFF"    {% if camera_params.camera[index].flow_control == "XON/XOFF" %}selected{% endif %}>XON/XOFF</option>
-                                            </select>
-                                        </div>
-                                        <div class='col-sm-12'>
-                                            <button type='button' class='btn btn-secondary checkCameraConnection'  id='checkCameraConnection-{{ index }}'>Check Connection</button>
-                                            <button type='button' class='btn btn-primary saveCameraSettings' disabled id="saveCameraSettings-{{ index }}">Save Settings</button>
-                                        </div>
-                                    </div> 
-                                </form>
+                                
                             </div>
                         {% endfor %}
+                        
+                        
+                        
                         
                         <!-- DATABASE CONNECTION SETTINGS TAB -->
                         <div class="tab-pane" id="db_tab" role="tabpanel">
