@@ -197,11 +197,10 @@ def check_camera_connection():
 
 @app.route('/settings/scale', methods=["GET", "POST"])
 def set_scale_parames():
-    args = flask.request.form
+    args = flask.request.form.to_dict()
 
     app.logger.info(app.scale_params)
-    args = dict(args)
-    scale_id = int(args['scale_id'][0])
+    scale_id = int(args['scale_id'])
     
     app.logger.info("SCALE SETTINGS")
     app.logger.info(args)
