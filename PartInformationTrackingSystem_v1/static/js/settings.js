@@ -1,4 +1,3 @@
-
 $("[id^='saveScaleSettings-']").click(function(){
     
     let id = this.id.split('-')[1];
@@ -14,7 +13,8 @@ $("[id^='saveScaleSettings-']").click(function(){
     $.post('/settings/scale', data ).done(function( data ) {
         if(data == 'OK'){
             
-            $(".connection-settings").prop("checked", false);
+            $("#scaleSettings-"+id).click();
+            
             $("#scaleIpInput-"+id).prop("disabled", true);
             $("#scalePortInput-"+id).prop("disabled", true);
             
@@ -47,13 +47,25 @@ $("#saveDBSettings").click(function(){
     
 });
 
-$("#checkScaleConnection").click(function(){
+$(".checkScaleConnection").click(function(){
+    let id = this.id.split('-')[1];
+    
     var data = {
-        "scale_ip": $("#scaleIpInput").val(),
-        "scale_port": $("#scalePortInput").val()
+        "scale_ip": $("#scaleIpInput-"+id).val(),
+        "scale_port": $("#scalePortInput-"+id).val()
     }
+    
+    console.log(data)
+    
     $.post('/settings/scale/checkconnection', data, function(data, status, xhr){
-        alert(xhr.responseText);
+        let res = xhr.responseText
+        if(res == 'OK'){
+            $('.connection-settings').click(); 
+            alertify.success("Success!")
+        }else{
+            alertify.error(res)
+            console.log(res)
+        }
         
     });
 });
@@ -65,9 +77,18 @@ $("#checkDBConnection").click(function(){
         "db_user" : $("#databaseUserInput").val(),
         "db_password": $("#databasePasswordInput").val()
     };
+    
+    console.log(data)
+    
     $.post('/settings/db/checkconnection', data, function(data, status, xhr){
-        // alert(xhr.responseText); 
-        alertify.success("Success")
+        let res = xhr.responseText
+        
+        if(res == 'OK'){
+            alertify.success("Success!")
+        }else{
+            alertify.error(res)
+            console.log(res)
+        }
     });
 });
 
@@ -143,8 +164,8 @@ $(document).ready(function () {
             $("#databaseUserInput").prop("disabled", false);
             $("#databasePasswordInput").prop("disabled", false);
             
-            // ENABLE SAVE BTN
-            $("#saveDBSettings").prop('disabled', false);
+            $("#saveDBSettings").prop('disabled', false); // ENABLE SAVE BTN
+            $("#checkDBConnection").prop('disabled', true); // DISABLE TEST BTN
             
         }else{
             $("#databaseIPInput").prop("disabled", true);
@@ -152,22 +173,24 @@ $(document).ready(function () {
             $("#databaseUserInput").prop("disabled", true);
             $("#databasePasswordInput").prop("disabled", true);
             
-            // DISABLE SAVE BTN
-            $("#saveDBSettings").prop('disabled', true);
+            $("#saveDBSettings").prop('disabled', true); // ENABLE SAVE BTN
+            $("#checkDBConnection").prop('disabled', false); // DISABLE TEST BTN
         }
     });
     
     
-    $(".connection-settings").change(function(){
+    $(".scale-connection-settings").change(function(){
         let id = this.id.split('-')[1];
         if(this.checked) {
             $("#scaleIpInput-"+id).prop("disabled", false);
             $("#scalePortInput-"+id).prop("disabled", false);
             $("#saveScaleSettings-"+id).prop("disabled", false);
+            $("#scaleConnection-"+id).prop("disabled", true); // disable test connection btn
         }else{
             $("#scaleIpInput-"+id).prop("disabled", true);
             $("#scalePortInput-"+id).prop("disabled", true);
             $("#saveScaleSettings-"+id).prop("disabled", true);
+            $("#scaleConnection-"+id).prop("disabled", false); // enable test connection btn
         }
     });
     

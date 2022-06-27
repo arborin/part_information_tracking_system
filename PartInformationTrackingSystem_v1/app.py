@@ -8,7 +8,7 @@ from flask import Flask
 from flask import flash
 from flask import render_template
 from flask.config import Config
-from pymongo import MongoClient
+from pymongo import MongoClient, errors
 from flask_socketio import SocketIO, emit
 from threading import Thread, Event
 import logging
@@ -182,10 +182,11 @@ def set_camera_params():
 
 @app.route('/settings/camera/checkconnection', methods=["GET", "POST"])
 def check_camera_connection():
-    if app.camera_port:
-        if app.camera_port.is_open:
-            app.camera_port.close()
     try:
+        if app.camera_port:
+            if app.camera_port.is_open:
+                app.camera_port.close()
+                
         app.camera_port = communicate.create_camera_port(app.camera_params)
         return app.make_response('OK')
     except Exception:
@@ -201,10 +202,6 @@ def set_scale_parames():
 
     app.logger.info(app.scale_params)
     scale_id = int(args['scale_id'])
-    
-    app.logger.info("SCALE SETTINGS")
-    app.logger.info(args)
-    app.logger.info("==============")
     
     app.scale_params['scale'][scale_id]['scale_ip'] = args['scale_ip']
     app.scale_params['scale'][scale_id]['scale_port'] = args['scale_port']
@@ -268,6 +265,7 @@ def check_scale_connection():
 @app.route('/settings/db/checkconnection', methods=['GET', 'POST'])
 def check_db_connection():
     params = flask.request.form
+    res = 'OK'
     try:
         conn_params = {}
         if params['db_ip']!='':
@@ -280,9 +278,13 @@ def check_db_connection():
             conn_params.update({'password':params['db_password']})
         client = MongoClient(**conn_params, serverSelectionTimeoutMS=3000)
         client.admin.command('ismaster')
-        return app.make_response('OK')
+        # client.server_info()
+        # return app.make_response('OK')
+
     except Exception as e:
-        return app.make_response('{}'.format(e))
+        res = 'Error: {}...'.format(str(e)[:20])
+
+    return app.make_response('{}'.format(res))
 
 @app.route('/set_active_weight', methods=['GET', 'POST'])
 def set_active_weight():
