@@ -9,7 +9,8 @@ function getWeight(){
 $(document).ready(function () {
     //connect to the socket server.
     var socket = io.connect('http://' + document.domain + ':' + location.port + '/test');
-
+    console.log("Socet listening is running...")
+    console.log('http://' + document.domain + ':' + location.port + '/test')
     //receive details from server
     socket.on('newnumber', function (msg) {
         console.log("Received number" + msg.number);
@@ -35,13 +36,14 @@ $('.setActiveWeight').click(function(){
     
     console.log(row);
     values = row.find('input')
+    console.log(values)
     
     var data = {
         'scale': id,
-        "part_name": values[0].value,
-        "weight":values[1].value,
-        "ll": values[2].value,
-        'hl': values[3].value
+        "part_name": values[1].value,
+        "weight":values[3].value,
+        "ll": values[4].value,
+        'hl': values[5].value
     }
     
     console.log("-----------------------------------");
@@ -102,18 +104,22 @@ function reload(){
 }
 
 function checkWeightWasSet(data, status, xhr){
-    resp = xhr.responseText;
-
+    let resp = xhr.responseText;
+    
+    console.log(resp)
     if(resp == 'NOK'){
         alertify.error("Connection Error...")
     }
     else{
-        if( resp.includes('MH') && resp.includes('MH') && resp.includes('MM')){
+        if(resp.includes('MH') && resp.includes('MH') && resp.includes('MM')){
             console.log('Weight was set');
             var res = data.split("#");
-            $("#active_weight").text(res[1])
             
-            alertify.error("Success")
+            let part_name = res[1]
+            let scale = res[2];
+            $("#ActiveWeight"+scale).text(part_name)
+            
+            alertify.success("Weight was set!")
         }
         else{
             console.log('Weight was not set');

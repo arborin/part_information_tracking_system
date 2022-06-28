@@ -291,9 +291,22 @@ def set_active_weight():
     
     params = flask.request.form
     
+    get_data = params.to_dict() 
+
+    
+    scale_index = 0;
+    if get_data['scale'] == 'ScaleB':
+        scale_index = 1;
+        
+    app.logger.info("+++++++++++++++++++++++++++++++++++++++")
+    print(app.scale_params['scale'][scale_index]['scale_ip'])
+    print(app.scale_params['scale'][scale_index]['scale_port'])
+    print(params['scale'])
+    app.logger.info("+++++++++++++++++++++++++++++++++++++++")
+    
     try:
-        result = communicate.scale_set_weight((app.scale_params['scale_ip'], 
-                                                app.scale_params['scale_port']),
+        result = communicate.scale_set_weight((app.scale_params['scale'][scale_index]['scale_ip'], 
+                                                app.scale_params['scale'][scale_index]['scale_port']),
                                                 params['weight'], 
                                                 params['ll'], 
                                                 params['hl'])
@@ -303,7 +316,8 @@ def set_active_weight():
                             'hl':float(params['hl'].replace(',', '.')),
                             "part_name": params["part_name"]
                             }
-        return app.make_response(str(result) + "#" + params["part_name"])
+        
+        return app.make_response(str(result) + "#" + params["part_name"] + "#" + params['scale'])
     except:
         return app.make_response("NOK")
                         
