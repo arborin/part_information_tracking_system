@@ -21,7 +21,7 @@ def scale_set_weight(addr, weight, low, high):
     high = str(high).replace('.', ',')
     sock = socket.create_connection(addr)
     # setting weight
-    print('Setting weight')
+    print('Setting weight: {}'.format(weight))
     command = 'SM{}\r\n'.format(weight)
     command = bytes(command, 'ascii')
     sock.sendall(command)
@@ -30,7 +30,7 @@ def scale_set_weight(addr, weight, low, high):
     sock.close()
     print(response.decode('ascii'))
     responses+=response
-    print('Setting Limit Low')
+    print('Setting Limit Low: {}'.format(low))
     command = 'SL{}\r\n'.format(low)
     command = bytes(command, 'ascii')
     sock = socket.create_connection(addr)
@@ -40,7 +40,7 @@ def scale_set_weight(addr, weight, low, high):
     sock.close()
     responses+=response
     print(response.decode('ascii'))
-    print('Setting Limit High')
+    print('Setting Limit High: {}'.format(high))
     command = 'SH{}\r\n'.format(high)
     command = bytes(command, 'ascii')
     sock = socket.create_connection(addr)
