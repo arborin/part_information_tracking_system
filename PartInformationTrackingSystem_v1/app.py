@@ -80,7 +80,15 @@ thread = Thread()
 thread_stop_event = Event()
 
 def check_camera():
+   
+    
     while not thread_stop_event.isSet():
+        
+        app.logger.info("======================================")
+        app.logger.info(app)
+        app.logger.info(app.active_weight)
+        app.logger.info("======================================")
+        
         if app.camera_port and app.active_weight:
             camera_string = communicate.query_camera_string(app.camera_port)
         else:
@@ -100,7 +108,7 @@ def check_camera():
             if (result <= app.active_weight['hl']) and (result >= app.active_weight['ll']):
                 resp = communicate.write_weight_to_db(app.db_params, result, app)
             else:
-                resp = resp = communicate.write_weight_to_db(app.db_params, result, app, False)
+                resp = communicate.write_weight_to_db(app.db_params, result, app, False)
 
             socketio.emit('newnumber', {'number': str(resp)}, namespace='/test')
 
@@ -182,16 +190,19 @@ def set_camera_params():
 
 @app.route('/settings/camera/checkconnection', methods=["GET", "POST"])
 def check_camera_connection():
-    try:
-        if app.camera_port:
-            if app.camera_port.is_open:
-                app.camera_port.close()
-                
-        app.camera_port = communicate.create_camera_port(app.camera_params)
-        return app.make_response('OK')
-    except Exception:
-        import traceback
-        return app.make_response(traceback.format_exc())
+    app.logger.info(" >> Checking cammera connection")
+    app.logger.info(app.camera_params)
+    # try:
+    if app.camera_port:
+        if app.camera_port.is_open:
+            app.camera_port.close()
+            
+    app.camera_port = communicate.create_camera_port(app.camera_params)
+    app.logger.info(app.camera_port)
+    return app.make_response('OK')
+    # except Exception:
+    #     import traceback
+    #     return app.make_response(traceback.format_exc())
 
 
 

@@ -193,6 +193,7 @@ def query_camera_string(cameraport):
             # TODO to make sure all data is really collected
 
 def create_camera_port(params):
+    logger.info(" >> Create cammera port")
     if sys.platform == 'linux':
         port = 'virtual-tty'
     else:
@@ -215,13 +216,13 @@ def create_camera_port(params):
     rtscts = (params['flow_control'] == 'RTS/CTS')
     dsrdtr = (params['flow_control'] == 'DSR/DTR')
     camera_port = serial.Serial(
-    port = port,
-    baudrate = baudrate,
-    parity = parity,
-    bytesize=bytesize,
-    stopbits = stopbits,
-    xonxoff=xonxoff,
-    rtscts = rtscts,
-    dsrdtr = dsrdtr,
-    timeout = 0.1)
+                                port = port,
+                                baudrate = baudrate,
+                                parity = parity,
+                                bytesize=bytesize,
+                                stopbits = stopbits,
+                                xonxoff=xonxoff,
+                                rtscts = rtscts,
+                                dsrdtr = dsrdtr,
+                                timeout = 0.1)
     return camera_port
