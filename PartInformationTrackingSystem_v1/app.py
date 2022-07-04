@@ -82,12 +82,12 @@ thread_stop_event = Event()
 def check_camera():
    
     
+    app.logger.info("======================================")
+    app.logger.info(app)
+    app.logger.info(app.active_weight)
+    app.logger.info("======================================")
     while not thread_stop_event.isSet():
         
-        app.logger.info("======================================")
-        app.logger.info(app)
-        app.logger.info(app.active_weight)
-        app.logger.info("======================================")
         
         if app.camera_port and app.active_weight:
             camera_string = communicate.query_camera_string(app.camera_port)
