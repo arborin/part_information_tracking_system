@@ -88,14 +88,18 @@ def check_camera():
         
         
         for scale in app.scale_params['scale']:
+            scale_name = scale['name']
+            logging.info("0 - PROCESS RUNS FOR: {} \n".format(scale['name']))
             
             # IF SCALE IS ACTIVE IN CASE OF 2 SCALE
-            if scale.active: 
-                # if app.camera_port and app.active_weight:
+            if scale['active']: 
+                # if app.camera_port and app.active_weight[scale_name]:
                 #     camera_string = communicate.query_camera_string(app.camera_port)
                 # else:
                 #     socketio.sleep(1)
                 #     continue
+                
+                logging.info("1 - GET DATA FROM CAMERA \n")
                 
                 camera_string = "HHAR2502301##Ca##131945##T04222##S0002130##N01###"
                 
@@ -105,23 +109,32 @@ def check_camera():
                         app.last_camera_string = camera_string[1:]
                     else:
                         app.last_camera_string = camera_string
-                    print("DEBUG: camera string: {}".format(app.last_camera_string), file=sys.stderr)
+                        
+                    logging.info("2 - camera string: {}\n".format(app.last_camera_string))
                     
-                    socketio.sleep(5)
+                    # socketio.sleep(5)
                     
+                    # OLD
                     # result = communicate.scale_get_weight((app.scale_params["scale_ip"], app.scale_params['scale_port']),app)
-                    result = communicate.scale_get_weight((scale["scale_ip"], scale['scale_port']), app)
-
-                    if (result <= app.active_weight['hl']) and (result >= app.active_weight['ll']):
+                    # NEW
+                    # result = communicate.scale_get_weight((scale["scale_ip"], scale['scale_port']), app)
+                    logging.info("3 - SCALE IP: {} PORT: {}\n".format(scale["scale_ip"], scale["scale_port"]))
+                    result = 1000
+                    
+                    
+                    if (result <= app.active_weight[scale_name]['hl']) and (result >= app.active_weight[scale_name]['ll']):
                         # resp = communicate.write_weight_to_db(app.db_params, result, app)
-                        logging.info(">>>>>>>>>>>>>>> WRITE TO DATABASE")
+                        logging.info("4 - WRITE TO DATABASE\n")
                     else:
-                        logging.info(">>>>>>>>>>>>>>> WRITE TO DATABASE FALSE")
+                        logging.info("4 - WRITE TO DATABASE FALSE\n")
                         # resp = communicate.write_weight_to_db(app.db_params, result, app, False)
 
                     # socketio.emit('newnumber', {'number': str(resp)}, namespace='/test')
-
-                socketio.sleep(1)
+            
+            logging.info("END - PROCESS \n")
+            logging.info("===============================================================")
+        
+        socketio.sleep(1)
 
 
 @socketio.on('connect', namespace='/test')
@@ -315,6 +328,7 @@ def set_active_weight():
 
     
     scale_index = 0;
+    scale_name = get_data['scale']
     if get_data['scale'] == 'ScaleB':
         scale_index = 1;
         
@@ -330,8 +344,8 @@ def set_active_weight():
                                                 params['weight'], 
                                                 params['ll'], 
                                                 params['hl'])
-                                                
-        app.active_weight = {"weight":float(params['weight'].replace(',','.')),
+        app.active_weight = {}                                   
+        app.active_weight[scale_name] = {"weight":float(params['weight'].replace(',','.')),
                             'll':float(params['ll'].replace(',', '.')),
                             'hl':float(params['hl'].replace(',', '.')),
                             "part_name": params["part_name"]
@@ -346,6 +360,7 @@ def set_active_weight():
 
 @app.route('/get_weight', methods=['GET', 'POST'])
 def get_weight():
+    app.logger.info("def get_weight()")
     result = communicate.scale_get_weight((app.scale_params["scale_ip"], app.scale_params['scale_port']),app)
     if app.active_weight is None:
         return app.make_response("Error. Please set active weight first. Weight is {}".format(result))
