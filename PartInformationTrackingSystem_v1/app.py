@@ -44,12 +44,14 @@ class App(Flask):
         self.db_file = db_params
 
         self.active_weight = None
-        try:
+        try: 
             self.camera_port = communicate.create_camera_port(self.camera_params)
         except:
+            
             self.camera_port = None
 
         self.last_camera_string = None
+        
 
     def write_settings(self, dest):
         if dest == 'camera':
@@ -80,39 +82,46 @@ thread = Thread()
 thread_stop_event = Event()
 
 def check_camera():
-   
-    
-    app.logger.info("======================================")
-    app.logger.info(app)
-    app.logger.info(app.active_weight)
-    app.logger.info("======================================")
+    logging.info(">>>>>>>>>>>>>>>def check camera")
     while not thread_stop_event.isSet():
         
         
-        if app.camera_port and app.active_weight:
-            camera_string = communicate.query_camera_string(app.camera_port)
-        else:
-            socketio.sleep(1)
-            continue
+        
+        for scale in app.scale_params['scale']:
+            
+            # IF SCALE IS ACTIVE IN CASE OF 2 SCALE
+            if scale.active: 
+                # if app.camera_port and app.active_weight:
+                #     camera_string = communicate.query_camera_string(app.camera_port)
+                # else:
+                #     socketio.sleep(1)
+                #     continue
+                
+                camera_string = "HHAR2502301##Ca##131945##T04222##S0002130##N01###"
+                
+                if camera_string and (camera_string.count('#')==13):
+                    # check if first char is valid
+                    if camera_string[0].isalnum() is False:
+                        app.last_camera_string = camera_string[1:]
+                    else:
+                        app.last_camera_string = camera_string
+                    print("DEBUG: camera string: {}".format(app.last_camera_string), file=sys.stderr)
+                    
+                    socketio.sleep(5)
+                    
+                    # result = communicate.scale_get_weight((app.scale_params["scale_ip"], app.scale_params['scale_port']),app)
+                    result = communicate.scale_get_weight((scale["scale_ip"], scale['scale_port']), app)
 
-        if camera_string and (camera_string.count('#')==13):
-            # check if first char is valid
-            if camera_string[0].isalnum() is False:
-                app.last_camera_string = camera_string[1:]
-            else:
-                app.last_camera_string = camera_string
-            print("DEBUG: camera string: {}".format(app.last_camera_string))
-            socketio.sleep(5)
-            result = communicate.scale_get_weight((app.scale_params["scale_ip"], app.scale_params['scale_port']),app)
+                    if (result <= app.active_weight['hl']) and (result >= app.active_weight['ll']):
+                        # resp = communicate.write_weight_to_db(app.db_params, result, app)
+                        logging.info(">>>>>>>>>>>>>>> WRITE TO DATABASE")
+                    else:
+                        logging.info(">>>>>>>>>>>>>>> WRITE TO DATABASE FALSE")
+                        # resp = communicate.write_weight_to_db(app.db_params, result, app, False)
 
-            if (result <= app.active_weight['hl']) and (result >= app.active_weight['ll']):
-                resp = communicate.write_weight_to_db(app.db_params, result, app)
-            else:
-                resp = communicate.write_weight_to_db(app.db_params, result, app, False)
+                    # socketio.emit('newnumber', {'number': str(resp)}, namespace='/test')
 
-            socketio.emit('newnumber', {'number': str(resp)}, namespace='/test')
-
-        socketio.sleep(1)
+                socketio.sleep(1)
 
 
 @socketio.on('connect', namespace='/test')
@@ -121,7 +130,7 @@ def test_connect():
     print('Client connected')
 
     if not thread.isAlive():
-        print("Starting Thread")
+        print("Starting Thread", file=sys.stderr)
         thread = socketio.start_background_task(check_camera)
 
 @socketio.on('disconnect', namespace='/test')
@@ -190,7 +199,7 @@ def set_camera_params():
 
 @app.route('/settings/camera/checkconnection', methods=["GET", "POST"])
 def check_camera_connection():
-    app.logger.info(" >> Checking cammera connection")
+    print(" >> Checking cammera connection", file=sys.stderr)
     app.logger.info(app.camera_params)
     # try:
     if app.camera_port:

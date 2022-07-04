@@ -1,1 +1,1 @@
-{"baud_rate": "9600", "byte_size": "8", "com_port": "COM3", "flow_control": "RTS/CTS", "parity": "None", "stop_bits": "1"}
+{"baud_rate": "9600", "byte_size": "8", "com_port": "COM8", "flow_control": "RTS/CTS", "parity": "None", "stop_bits": "1"}

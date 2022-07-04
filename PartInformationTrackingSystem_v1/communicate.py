@@ -15,6 +15,8 @@ logger.addHandler(handler)
 
 
 def scale_set_weight(addr, weight, low, high):
+    print(">>>>>>>>>>>>>>>>>>>>> def scale_set_weight", file=sys.stderr)
+    
     responses = b''
     weight = str(weight).replace('.', ',')
     low = str(low).replace('.', ',')
@@ -53,7 +55,7 @@ def scale_set_weight(addr, weight, low, high):
     return responses.decode('ascii')
 
 def scale_get_weight(addr, app):
-
+    print(">>>>>>>>>>>>>>>>>>>>> def scale_get_weight", file=sys.stderr)
     # if app.camera_port is None:
     #     print('Camera is not ready, skip get weight.')
     #     return 0
@@ -94,6 +96,9 @@ def scale_get_weight(addr, app):
     return weight
 
 def write_weight_to_db(db_params, weight, app, weigt_within_limits=True):
+    print(">>>>>>>>>>>>>>>>>>>>> def write_weight_to_db", file=sys.stderr)
+    
+    
     client = MongoClient(host=db_params['database_ip'], port=int(db_params['database_port']), username=db_params['database_user'],
     password=db_params['database_password'])
     db = client.partdata
@@ -162,7 +167,7 @@ def write_weight_to_db(db_params, weight, app, weigt_within_limits=True):
     return query
 
 def query_camera_string(cameraport):
-
+    print(">>>>>>>>>>>>>>>>>>>>> def query_camera_string", file=sys.stderr)
     result = cameraport.read_until()
 
     if result == b'\xff':
@@ -193,7 +198,8 @@ def query_camera_string(cameraport):
             # TODO to make sure all data is really collected
 
 def create_camera_port(params):
-    logger.info(" >> Create cammera port")
+
+    print(">>>>>>>>>>>>>>>>>>>>> def create_camera_port", file=sys.stderr)                   
     if sys.platform == 'linux':
         port = 'virtual-tty'
     else:
@@ -218,11 +224,14 @@ def create_camera_port(params):
     camera_port = serial.Serial(
                                 port = port,
                                 baudrate = baudrate,
-                                parity = parity,
-                                bytesize=bytesize,
-                                stopbits = stopbits,
-                                xonxoff=xonxoff,
-                                rtscts = rtscts,
-                                dsrdtr = dsrdtr,
-                                timeout = 0.1)
+                                # parity = parity,
+                                # bytesize=bytesize,
+                                # stopbits = stopbits,
+                                # xonxoff=xonxoff,
+                                # rtscts = rtscts,
+                                # dsrdtr = dsrdtr,
+                                timeout = 2)
+                                
+    print(">>>>>>>>>>>>>>>>>>>>> RETRUN cammera port", file=sys.stderr)
     return camera_port
+
