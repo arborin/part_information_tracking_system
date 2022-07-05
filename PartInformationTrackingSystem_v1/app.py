@@ -159,8 +159,10 @@ def test():
     
     with open(app.scale_file, 'r') as fileo:
         app.scale_params = json.load(fileo)
-        
-    active = app.active_weight["part_name"] if app.active_weight is not None else "No Part active"
+    
+    active = {}  
+    active['scale_a'] = app.active_weight['Scale A']["part_name"] if app.active_weight is not None else "No Part active"
+    active['scale_b'] = app.active_weight['Scale B']["part_name"] if app.active_weight is not None else "No Part active"
     
     return render_template('base.html', title = title, weights = app.weights, scale_params = app.scale_params,  active_weight = active)
 
@@ -361,11 +363,14 @@ def set_active_weight():
 @app.route('/get_weight', methods=['GET', 'POST'])
 def get_weight():
     app.logger.info("def get_weight()")
+    
+    scale_name = app.scale_params["name"]
+    
     result = communicate.scale_get_weight((app.scale_params["scale_ip"], app.scale_params['scale_port']),app)
     if app.active_weight is None:
         return app.make_response("Error. Please set active weight first. Weight is {}".format(result))
 
-    if (result <= app.active_weight['hl']) and (result >= app.active_weight['ll']):
+    if (result <= app.active_weight[scale_name]['hl']) and (result >= app.active_weight[scale_name]['ll']):
         resp = communicate.write_weight_to_db(app.db_params, result, app)
         return app.make_response(str(resp))
     else:
