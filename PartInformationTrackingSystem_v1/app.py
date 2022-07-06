@@ -160,9 +160,13 @@ def test():
     with open(app.scale_file, 'r') as fileo:
         app.scale_params = json.load(fileo)
     
-    active = {}  
-    active['scale_a'] = app.active_weight['ScaleA']["part_name"] if app.active_weight is not None else "No Part active"
-    active['scale_b'] = app.active_weight['ScaleB']["part_name"] if app.active_weight is not None else "No Part active"
+    active = {'scale_a': "No Part active", 'scale_b': "No Part active"}
+    
+    if app.active_weight.get('ScaleA'):
+        active['scale_a'] = app.active_weight['ScaleA']["part_name"]
+    
+    if app.active_weight.get('ScaleB'):
+        active['scale_b'] = app.active_weight['ScaleB']["part_name"]
     
     return render_template('base.html', title = title, weights = app.weights, scale_params = app.scale_params,  active_weight = active)
 
