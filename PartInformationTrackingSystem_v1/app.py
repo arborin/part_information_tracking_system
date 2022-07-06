@@ -161,8 +161,8 @@ def test():
         app.scale_params = json.load(fileo)
     
     active = {}  
-    active['scale_a'] = app.active_weight['Scale A']["part_name"] if app.active_weight is not None else "No Part active"
-    active['scale_b'] = app.active_weight['Scale B']["part_name"] if app.active_weight is not None else "No Part active"
+    active['scale_a'] = app.active_weight['ScaleA']["part_name"] if app.active_weight is not None else "No Part active"
+    active['scale_b'] = app.active_weight['ScaleB']["part_name"] if app.active_weight is not None else "No Part active"
     
     return render_template('base.html', title = title, weights = app.weights, scale_params = app.scale_params,  active_weight = active)
 
@@ -352,6 +352,10 @@ def set_active_weight():
                             'hl':float(params['hl'].replace(',', '.')),
                             "part_name": params["part_name"]
                             }
+                            
+        print("==========================================")
+        print(app.active_weight)
+        print("==========================================")
         
         return app.make_response(str(result) + "#" + params["part_name"] + "#" + params['scale'])
     except:
