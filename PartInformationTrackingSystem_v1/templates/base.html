@@ -33,7 +33,7 @@
                             <select id="selectActiveWeightScaleA" class="form-control">
                                 {% for weight in weights %}
                                     {% if weight.scale == 'ScaleA'%}
-                                        <option value="{{weight.part_name}}">{{weight.part_name}}</option>
+                                        <option value="{{weight.part_name}}" {% if weight.part_name == active_weight['scale_a'] %} selected {% endif %}>{{weight.part_name}}</option>
                                     {% endif%}
                                 {% endfor %}
                             </select>
@@ -46,7 +46,13 @@
                     
                     <div class="alert alert-warning">
                         
-                        <span class="col-sm-4"><strong>Active Part: <span id='ActiveWeightScaleA'>No Part active {{ active_weight['scale_a'] }}</span></strong></span>
+                        <span class="col-sm-4"><strong>Active Part: <span id='ActiveWeightScaleA'>
+                            {% if active_weight['scale_a'] %}
+                                {{ active_weight['scale_a'] }}
+                            {% else %}
+                                No Part active 
+                            {% endif %}
+                        </span></strong></span>
                     </div>
 
                     <table class="table table-bordered table-sm mt-4">
@@ -108,12 +114,12 @@
                     </div>
                     
                     <div class="row mb-3">
-                
+                        {{ active_weight }}
                         <div class="col-md-6">   
                             <select id="selectActiveWeightScaleB" class="form-control">
                                 {% for weight in weights %}
                                     {% if weight.scale == 'ScaleB'%}
-                                        <option value="{{weight.part_name}}">{{weight.part_name}}</option>
+                                        <option value="{{weight.part_name}}" {% if weight.part_name == active_weight['scale_b'] %} selected {% endif %}>{{weight.part_name}}</option>
                                     {% endif %}
                                 {% endfor %}
                             </select>
@@ -124,7 +130,13 @@
                     </div>
                     
                     <div class="alert alert-warning">
-                        <span class="col-sm-4"><strong>Active Part: <span id='ActiveWeightScaleB'>No Part active {{ active_weight['scale_b'] }}</span></strong></span>
+                        <span class="col-sm-4"><strong>Active Part: <span id='ActiveWeightScaleB'>
+                            {% if active_weight['scale_b'] %}
+                                {{ active_weight['scale_b'] }}
+                            {% else %}
+                                No Part active 
+                            {% endif %}
+                        </span></strong></span>
                     </div>
 
                     <table class="table table-bordered table-sm mt-4">

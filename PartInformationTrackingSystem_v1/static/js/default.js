@@ -29,9 +29,13 @@ $('.setActiveWeight').click(function(){
     // FIND SELECTED VALUE
     part_name = $("#selectActiveWeight"+id).val();
     
+    console.log(part_name);
     // FIND ROW BY ID
     // ID EXAMPLE: ScaleA_PistonUpperPart_SOP1
-    let row_id = id + "_" + part_name.replaceAll(' ','_')     
+    let row_id = id + "_" + part_name.replaceAll(' ', '_');
+
+    console.log(row_id);
+    
     row = $("#"+row_id);
     
     console.log(row);
@@ -50,6 +54,7 @@ $('.setActiveWeight').click(function(){
     console.log(data);
     console.log("-----------------------------------");
     $.post('/set_active_weight', data, checkWeightWasSet);
+    
     
 
 })
@@ -107,6 +112,7 @@ function checkWeightWasSet(data, status, xhr){
     let resp = xhr.responseText;
     
     console.log(resp)
+    
     if(resp == 'NOK'){
         alertify.error("Connection Error...")
     }
@@ -125,6 +131,8 @@ function checkWeightWasSet(data, status, xhr){
             console.log('Weight was not set');
         }
     }
+    
+
 
 };
 

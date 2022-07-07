@@ -163,11 +163,20 @@ def test():
     active = {'scale_a': "No Part active", 'scale_b': "No Part active"}
     
     if app.active_weight:
+        active = {'scale_a': "No Part active", 'scale_b': "No Part active"}
+        
         if app.active_weight.get('ScaleA'):
             active['scale_a'] = app.active_weight['ScaleA']["part_name"]
+        else:
+            active['scale_a'] = "No Part active"
         
         if app.active_weight.get('ScaleB'):
             active['scale_b'] = app.active_weight['ScaleB']["part_name"]
+        else:
+            active['scale_b'] = "No Part active"
+    
+   
+        
     
     return render_template('base.html', title = title, weights = app.weights, scale_params = app.scale_params,  active_weight = active)
 
@@ -345,7 +354,10 @@ def set_active_weight():
     print(params['scale'])
     app.logger.info("+++++++++++++++++++++++++++++++++++++++")
     
-    app.active_weight = {}                                   
+    # THIS IS FOR INIT DICT
+    if app.active_weight == None:
+        app.active_weight = {}
+                                           
     app.active_weight[scale_name] = {"weight":float(params['weight'].replace(',','.')),
                         'll':float(params['ll'].replace(',', '.')),
                         'hl':float(params['hl'].replace(',', '.')),
