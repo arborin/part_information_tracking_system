@@ -159,9 +159,23 @@ def test():
     with open(app.scale_file, 'r') as fileo:
         app.scale_params = json.load(fileo)
     
-    active = {}  
-    active['scale_a'] = app.active_weight['Scale A']["part_name"] if app.active_weight is not None else "No Part active"
-    active['scale_b'] = app.active_weight['Scale B']["part_name"] if app.active_weight is not None else "No Part active"
+    active = {'scale_a': "No Part active", 'scale_b': "No Part active"}
+    
+    if app.active_weight:
+        active = {'scale_a': "No Part active", 'scale_b': "No Part active"}
+        
+        if app.active_weight.get('ScaleA'):
+            active['scale_a'] = app.active_weight['ScaleA']["part_name"]
+        else:
+            active['scale_a'] = "No Part active"
+        
+        if app.active_weight.get('ScaleB'):
+            active['scale_b'] = app.active_weight['ScaleB']["part_name"]
+        else:
+            active['scale_b'] = "No Part active"
+    
+   
+        
     
     return render_template('base.html', title = title, weights = app.weights, scale_params = app.scale_params,  active_weight = active)
 
@@ -339,18 +353,29 @@ def set_active_weight():
     print(params['scale'])
     app.logger.info("+++++++++++++++++++++++++++++++++++++++")
     
+    # THIS IS FOR INIT DICT
+    if app.active_weight == None:
+        app.active_weight = {}
+                                           
+    app.active_weight[scale_name] = {"weight":float(params['weight'].replace(',','.')),
+                        'll':float(params['ll'].replace(',', '.')),
+                        'hl':float(params['hl'].replace(',', '.')),
+                        "part_name": params["part_name"]
+                        }
+                        
+    print("==========================================")
+    print(app.active_weight)
+    print("==========================================")
+    
     try:
         result = communicate.scale_set_weight((app.scale_params['scale'][scale_index]['scale_ip'], 
                                                 app.scale_params['scale'][scale_index]['scale_port']),
                                                 params['weight'], 
                                                 params['ll'], 
                                                 params['hl'])
-        app.active_weight = {}                                   
-        app.active_weight[scale_name] = {"weight":float(params['weight'].replace(',','.')),
-                            'll':float(params['ll'].replace(',', '.')),
-                            'hl':float(params['hl'].replace(',', '.')),
-                            "part_name": params["part_name"]
-                            }
+        
+                            
+        
         
         return app.make_response(str(result) + "#" + params["part_name"] + "#" + params['scale'])
     except:
