@@ -85,23 +85,24 @@ def check_camera():
     logging.info(">>>>>>>>>>>>>>>def check camera")
     while not thread_stop_event.isSet():
         
-        
-        
         for scale in app.scale_params['scale']:
             scale_name = scale['name']
-            logging.info("0 - PROCESS RUNS FOR: {} \n".format(scale['name']))
+            logging.info("0 - PROCESS RUNS FOR SCALE: {} \n".format(scale['name']))
             
             # IF SCALE IS ACTIVE IN CASE OF 2 SCALE
             if scale['active']: 
-                # if app.camera_port and app.active_weight[scale_name]:
-                #     camera_string = communicate.query_camera_string(app.camera_port)
-                # else:
-                #     socketio.sleep(1)
-                #     continue
-                
                 logging.info("1 - GET DATA FROM CAMERA \n")
                 
-                camera_string = "HHAR2502301##Ca##131945##T04222##S0002130##N01###"
+                if app.camera_port and app.active_weight[scale_name]:
+                    camera_string = communicate.query_camera_string(app.camera_port)
+                else:
+                    socketio.sleep(1)
+                    continue
+                print("-----------------------------------------------------------")
+                print(camera_string)
+                print("-----------------------------------------------------------")
+                
+                # camera_string = "HHAR2502301##Ca##131945##T04222##S0002130##N01###"
                 
                 if camera_string and (camera_string.count('#')==13):
                     # check if first char is valid
@@ -110,26 +111,24 @@ def check_camera():
                     else:
                         app.last_camera_string = camera_string
                         
-                    logging.info("2 - camera string: {}\n".format(app.last_camera_string))
+                    logging.info("2 - CAMERA STRING: {}\n".format(app.last_camera_string))
                     
-                    # socketio.sleep(5)
+                    socketio.sleep(5)
                     
                     # OLD
                     # result = communicate.scale_get_weight((app.scale_params["scale_ip"], app.scale_params['scale_port']),app)
                     # NEW
-                    # result = communicate.scale_get_weight((scale["scale_ip"], scale['scale_port']), app)
+                    result = communicate.scale_get_weight((scale["scale_ip"], scale['scale_port']), app)
                     logging.info("3 - SCALE IP: {} PORT: {}\n".format(scale["scale_ip"], scale["scale_port"]))
-                    result = 1000
-                    
-                    
+                                        
                     if (result <= app.active_weight[scale_name]['hl']) and (result >= app.active_weight[scale_name]['ll']):
-                        # resp = communicate.write_weight_to_db(app.db_params, result, app)
+                        resp = communicate.write_weight_to_db(app.db_params, result, app)
                         logging.info("4 - WRITE TO DATABASE\n")
                     else:
                         logging.info("4 - WRITE TO DATABASE FALSE\n")
-                        # resp = communicate.write_weight_to_db(app.db_params, result, app, False)
+                        resp = communicate.write_weight_to_db(app.db_params, result, app, False)
 
-                    # socketio.emit('newnumber', {'number': str(resp)}, namespace='/test')
+                    socketio.emit('newnumber', {'number': str(resp)}, namespace='/test')
             
             logging.info("END - PROCESS \n")
             logging.info("===============================================================")
