@@ -324,6 +324,34 @@ def check_scale_connection():
         return app.make_response('{}'.format(e))
 
 
+@app.route('/settings/camera_ip/checkconnection', methods=['GET', 'POST'])
+def check_ip_camera_connection():
+    params = flask.request.form
+    camera_ip = params['camera_ip']
+    camera_port = params['camera_port']
+    print("==================================")
+    print("checking camera ip connection")
+    print(f"camera ip: {camera_ip}, camera_port: {camera_port} ")
+    print("==================================")
+    try:
+        sock = socket.create_connection((camera_ip, camera_port), 0.5)
+        command = 'T\r\n'
+        command = bytes(command, 'ascii')
+        sock.sendall(command)
+        response = sock.recv(4096)
+        sock.shutdown(socket.SHUT_RDWR)
+        sock.close()
+        print("==================================")
+        print("camera response")
+        print(response.decode('ascii'))
+        print("==================================")
+
+        return app.make_response('OK')
+
+    except Exception as e:
+        return app.make_response('{}'.format(e))
+
+
 @app.route('/settings/db/checkconnection', methods=['GET', 'POST'])
 def check_db_connection():
     params = flask.request.form
