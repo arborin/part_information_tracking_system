@@ -88,16 +88,14 @@ def check_camera():
 
         for scale in app.scale_params['scale']:
             scale_name = scale['name']
-            logging.info(
-                "0 - PROCESS RUNS FOR SCALE: {} \n".format(scale['name']))
-
+            
             # IF SCALE IS ACTIVE IN CASE OF 2 SCALE
             if scale['active']:
+                logging.info("0 - PROCESS RUNS FOR SCALE: {} \n".format(scale['name']))
                 logging.info("1 - GET DATA FROM CAMERA \n")
 
                 if app.camera_port and app.active_weight[scale_name]:
-                    camera_string = communicate.query_camera_string(
-                        app.camera_port)
+                    camera_string = communicate.query_camera_string(app.camera_port)
                 else:
                     socketio.sleep(1)
                     continue
@@ -114,34 +112,27 @@ def check_camera():
                     else:
                         app.last_camera_string = camera_string
 
-                    logging.info(
-                        "2 - CAMERA STRING: {}\n".format(app.last_camera_string))
-
+                    logging.info("2 - CAMERA STRING: {}\n".format(app.last_camera_string))
                     socketio.sleep(5)
 
                     # OLD
                     # result = communicate.scale_get_weight((app.scale_params["scale_ip"], app.scale_params['scale_port']),app)
                     # NEW
-                    result = communicate.scale_get_weight(
-                        (scale["scale_ip"], scale['scale_port']), app)
-                    logging.info(
-                        "3 - SCALE IP: {} PORT: {}\n".format(scale["scale_ip"], scale["scale_port"]))
+                    result = communicate.scale_get_weight((scale["scale_ip"], scale['scale_port']), app)
+                    
+                    logging.info("3 - SCALE IP: {} PORT: {}\n".format(scale["scale_ip"], scale["scale_port"]))
 
                     if (result <= app.active_weight[scale_name]['hl']) and (result >= app.active_weight[scale_name]['ll']):
-                        resp = communicate.write_weight_to_db(
-                            app.db_params, result, app)
+                        resp = communicate.write_weight_to_db(app.db_params, result, app)
                         logging.info("4 - WRITE TO DATABASE\n")
                     else:
                         logging.info("4 - WRITE TO DATABASE FALSE\n")
-                        resp = communicate.write_weight_to_db(
-                            app.db_params, result, app, False)
+                        resp = communicate.write_weight_to_db(app.db_params, result, app, False)
 
-                    socketio.emit(
-                        'newnumber', {'number': str(resp)}, namespace='/test')
+                    socketio.emit('newnumber', {'number': str(resp)}, namespace='/test')
 
             logging.info("END - PROCESS \n")
-            logging.info(
-                "===============================================================")
+            logging.info("===============================================================")
 
         socketio.sleep(1)
 
